@@ -108,6 +108,9 @@ eval "$(pyenv init -)"
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
+# Add local scripts
+export PATH="${HOME}/.local/bin:${PATH}"
+
 export EDITOR="nvim"
 export BAT_THEME="gruvbox-dark"
 
