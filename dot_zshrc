@@ -66,6 +66,24 @@ zstyle ":completion:*" menu no
 zstyle ":fzf-tab:complete:cd:*" fzf-preview "exa $realpath"
 zstyle ":fzf-tab:complete:__zoxide_z:*" fzf-preview "exa $realpath"
 
+################################################################################
+#
+# Userland
+#
+################################################################################
+
+# Function to interactively enter a Docker container
+docker_enter() {
+    if [ -z "$1" ]; then
+        echo "Usage: docker_enter <container_name>"
+        return 1
+    fi
+
+    local CONTAINER_NAME=$1
+
+    docker exec -it $CONTAINER_NAME sh -c 'command -v bash >/dev/null && exec bash || exec sh'
+}
+
 # Aliases
 alias ls="exa"
 alias ll="exa -lh"
@@ -74,6 +92,9 @@ alias vi="nvim"
 alias cat="bat"
 alias peterpecker="sudo reboot"
 alias donthurtme="sudo shutdown now"
+alias dcup="docker compose up"
+alias dcdn="docker compose down"
+alias dex=docker_enter
 
 # Shell integrations
 eval "$(fzf --zsh)"
@@ -97,3 +118,11 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+## https://mike.place/2017/fzf-fd/
+# CTRL-R to fuzzily search your command line history then run an old command
+export FZF_DEFAULT_COMMAND="fd . $HOME"
+# CTRL-T to fuzzily search for a file or directory in your home directory then insert its path at the cursor
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# ALT-C to fuzzily search for a directory in your home directory then cd into it
+export FZF_ALT_C_COMMAND="fd -t d . $HOME"
