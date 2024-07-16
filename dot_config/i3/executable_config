@@ -10,8 +10,8 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 #Needed for i3-gaps
-for_window [class="^.*"] border pixel 2 
-gaps inner 5 
+for_window [class="^.*"] border pixel 2
+gaps inner 5
 gaps outer 2
 
 set $mod Mod4
@@ -50,7 +50,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec /usr/bin/xfce4-terminal
+bindsym $mod+Return exec /usr/bin/wezterm
 
 # kill focused window
 bindsym $mod+Shift+q kill
