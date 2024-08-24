@@ -17,6 +17,7 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
+zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 # Add in snippets
 zinit snippet OMZP::git
@@ -91,7 +92,7 @@ eval "$(zoxide init zsh)"
 export PATH="${HOME}/.local/bin:${PATH}"
 
 export EDITOR="nvim"
-export BAT_THEME="gruvbox-dark"
+export BAT_THEME="Catppuccin Frappe"
 
 ## https://mike.place/2017/fzf-fd/
 # CTRL-R to fuzzily search your command line history then run an old command
@@ -101,11 +102,12 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # ALT-C to fuzzily search for a directory in your home directory then cd into it
 export FZF_ALT_C_COMMAND="fd -t d . $HOME"
 
-eval "$(starship init zsh)"
-
 # fnm
 FNM_PATH="/home/antti/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
   export PATH="/home/antti/.local/share/fnm:$PATH"
   eval "`fnm env`"
 fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
