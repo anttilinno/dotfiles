@@ -102,6 +102,8 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # ALT-C to fuzzily search for a directory in your home directory then cd into it
 export FZF_ALT_C_COMMAND="fd -t d . $HOME"
 
+eval "$(starship init zsh)"
+
 # fnm
 FNM_PATH="/home/antti/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
