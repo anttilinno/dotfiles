@@ -83,6 +83,8 @@ alias dcup="docker compose up"
 alias dcdn="docker compose down"
 alias dps="docker ps --format \"table {{.Names}}\t{{.Status}}\""
 alias dex=docker_enter
+alias n="nvim"
+alias cz="chezmoi"
 
 # Shell integrations
 eval "$(fzf --zsh)"
@@ -92,6 +94,7 @@ eval "$(zoxide init zsh)"
 export PATH="${HOME}/.local/bin:${PATH}"
 
 export EDITOR="nvim"
+export PAGER="bat"
 export BAT_THEME="Catppuccin Frappe"
 
 ## https://mike.place/2017/fzf-fd/
