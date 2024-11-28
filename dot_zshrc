@@ -113,3 +113,4 @@ if [ -d "$FNM_PATH" ]; then
 fi
 
 eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/catppuccin_frappe.omp.json)"
+source "${HOME}/.local/bin/goto.sh"
