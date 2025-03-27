@@ -1,79 +1,87 @@
--- load defaults i.e lua_lsp
-require("nvchad.configs.lspconfig").defaults()
+local on_attach = require("nvchad.configs.lspconfig").on_attach
+local on_init = require("nvchad.configs.lspconfig").on_init
+local capabilities = require("nvchad.configs.lspconfig").capabilities
 
-local lspconfig = require "lspconfig"
+local lspconfig = require("lspconfig")
 
-local servers = { "bashls", "pyright", "vtsls" }
-local nvlsp = require "nvchad.configs.lspconfig"
+-- list of all servers configured.
+lspconfig.servers = {
+    "lua_ls",
+    "gopls",
+    "pyright",
+}
 
-local function lsp_client(name)
-  return assert(
-    vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf(), name = name })[1],
-    ("No %s client found for the current buffer"):format(name)
-  )
-end
+-- list of servers configured with default config.
+local default_servers = {}
 
 -- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = nvlsp.on_attach,
-    on_init = nvlsp.on_init,
-    capabilities = nvlsp.capabilities,
-  }
+for _, lsp in ipairs(default_servers) do
+    lspconfig[lsp].setup({
+        on_attach = on_attach,
+        on_init = on_init,
+        capabilities = capabilities,
+    })
 end
 
-require("lspconfig").ruff.setup {
-  init_options = {
+lspconfig.lua_ls.setup({
+    on_attach = on_attach,
+    on_init = on_init,
+    capabilities = capabilities,
+
     settings = {
-      -- Ruff language server settings go here
-      configuration = "~/.config/nvim/ruff.toml",
+        Lua = {
+            diagnostics = {
+                enable = false, -- Disable all diagnostics from lua_ls
+                -- globals = { "vim" },
+            },
+            workspace = {
+                library = {
+                    vim.fn.expand("$VIMRUNTIME/lua"),
+                    vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
+                    vim.fn.stdpath("data") .. "/lazy/ui/nvchad_types",
+                    vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy",
+                    "${3rd}/love2d/library",
+                },
+                maxPreload = 100000,
+                preloadFileSize = 10000,
+            },
+        },
     },
-  },
-  commands = {
-    RuffAutofix = {
-      function()
-        lsp_client("ruff").request("workspace/executeCommand", {
-          command = "ruff.applyAutofix",
-          arguments = {
-            { uri = vim.uri_from_bufnr(0), version = 0 },
-          },
-        })
-      end,
-      description = "Ruff: Fix all auto-fixable problems",
-    },
-    RuffOrganizeImports = {
-      function()
-        lsp_client("ruff").request("workspace/executeCommand", {
-          command = "ruff.applyOrganizeImports",
-          arguments = {
-            { uri = vim.uri_from_bufnr(0), version = 0 },
-          },
-        })
-      end,
-      description = "Ruff: Format imports",
-    },
-  },
-  on_attach = function(client, bufnr)
-    -- Disable hover in favor of Pyright
-    client.server_capabilities.hoverProvider = false
+})
 
-    vim.keymap.set("n", "<A-O>", "<cmd> RuffOrganizeImports <cr>", { desc = "Organize imports", buffer = bufnr })
-    vim.keymap.set("n", "<A-F>", "<cmd> RuffAutofix <cr>", { desc = "Fix issues found by ruff", buffer = bufnr })
-  end,
-}
+lspconfig.gopls.setup({
+    on_attach = function(client, bufnr)
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+        on_attach(client, bufnr)
+    end,
+    on_init = on_init,
+    capabilities = capabilities,
+    cmd = { "gopls" },
+    filetypes = { "go", "gomod", "gotmpl", "gowork" },
+    root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
+    settings = {
+        gopls = {
+            analyses = {
+                unusedparams = true,
+            },
+            completeUnimported = true,
+            usePlaceholders = true,
+            staticcheck = true,
+        },
+    },
+})
 
-require("lspconfig").pyright.setup {
-  commands = {},
-  settings = {
-    pyright = {
-      -- Using Ruff's import organizer
-      disableOrganizeImports = true,
+lspconfig.pyright.setup({
+    on_attach = on_attach,
+    on_init = on_init,
+    capabilities = capabilities,
+
+    settings = {
+        python = {
+            analysis = {
+                typeCheckingMode = "off", -- Disable type checking diagnostics
+            },
+        },
     },
-    python = {
-      analysis = {
-        -- Ignore all files for analysis to exclusively use Ruff for linting
-        ignore = { "*" },
-      },
-    },
-  },
-}
+})
