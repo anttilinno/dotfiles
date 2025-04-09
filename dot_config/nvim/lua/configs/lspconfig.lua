@@ -9,6 +9,7 @@ lspconfig.servers = {
     "lua_ls",
     "gopls",
     "pyright",
+    "yamlls",
 }
 
 -- list of servers configured with default config.
@@ -82,6 +83,26 @@ lspconfig.pyright.setup({
             analysis = {
                 typeCheckingMode = "off", -- Disable type checking diagnostics
             },
+        },
+    },
+})
+
+lspconfig.yamlls.setup({
+    cmd = { "yaml-language-server", "--stdio" },
+    filetypes = { "yaml", "yml" },
+    settings = {
+        yaml = {
+            -- Associate Docker Compose files with the docker-compose schema
+            schemas = {
+                ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = {
+                    "docker-compose.yml",
+                    "docker-compose.*.yml",
+                },
+                ["http://json.schemastore.org/github-workflow"] = "/.github/workflows/*",
+            },
+            validate = true,
+            hover = true,
+            completion = true,
         },
     },
 })
