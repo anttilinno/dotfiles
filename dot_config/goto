@@ -1,9 +1,0 @@
-docker /home/antti/Repos/Begin/legacy-docker
-mono /home/antti/Repos/Begin/legacy-docker/repos/begin-monorepo
-auth /home/antti/Repos/Begin/legacy-docker/repos/legacy-auth-ui
-perl-bg /home/antti/Repos/Begin/legacy-docker/repos/legacy-perl-background-jobs
-base /home/antti/Repos/Begin/legacy-begin-builds
-build /home/antti/Repos/Begin/legacy-local-builds
-perl /home/antti/Repos/Begin/legacy-docker/repos/legacy-perl
-node /home/antti/Repos/Begin/legacy-docker/repos/legacy-node
-k3 /home/antti/Repos/Begin/legacy-k3s-staging

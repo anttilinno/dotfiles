@@ -1,15 +1,12 @@
--- Pull in the wezterm API
-local wezterm = require("wezterm")
-
--- This will hold the configuration.
+local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
--- This is where you actually apply your config choices
+config.enable_tab_bar = false
 
--- For example, changing the color scheme:
-config.color_scheme = "Gruvbox light, soft (base16)"
-config.hide_tab_bar_if_only_one_tab = true
-config.font_size = 16
+-- Load color scheme from theme switcher
+local ok, scheme = pcall(dofile, os.getenv("HOME") .. "/.config/wezterm/colors.lua")
+if ok and scheme then
+    config.color_scheme = scheme
+end
 
--- and finally, return the configuration to wezterm
 return config

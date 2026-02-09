@@ -1,0 +1,91 @@
+# Gruvbox Light theme for btop
+
+# Main background
+theme[main_bg]="#f2e5bc"
+
+# Main text color
+theme[main_fg]="#3c3836"
+
+# Title color for boxes
+theme[title]="#3c3836"
+
+# Highlight color for keyboard shortcuts
+theme[hi_fg]="#79740e"
+
+# Background color of selected item in processes box
+theme[selected_bg]="#d5c4a1"
+
+# Foreground color of selected item in processes box
+theme[selected_fg]="#3c3836"
+
+# Color of inactive/disabled text
+theme[inactive_fg]="#928374"
+
+# Color of text appearing on top of graphs
+theme[graph_text]="#3c3836"
+
+# Background color of the percentage meters
+theme[meter_bg]="#ebdbb2"
+
+# Misc colors for processes box including mini cpu graphs, subtle hierarchical text color
+theme[proc_misc]="#076678"
+
+# CPU box outline color
+theme[cpu_box]="#79740e"
+
+# Memory/disks box outline color
+theme[mem_box]="#427b58"
+
+# Net up/down box outline color
+theme[net_box]="#8f3f71"
+
+# Processes box outline color
+theme[proc_box]="#076678"
+
+# Box divider line and target line color
+theme[div_line]="#bdae93"
+
+# Temperature graph colors
+theme[temp_start]="#076678"
+theme[temp_mid]="#b57614"
+theme[temp_end]="#9d0006"
+
+# CPU graph colors
+theme[cpu_start]="#79740e"
+theme[cpu_mid]="#b57614"
+theme[cpu_end]="#9d0006"
+
+# Mem/Disk free meter
+theme[free_start]="#427b58"
+theme[free_mid]="#79740e"
+theme[free_end]="#b57614"
+
+# Mem/Disk cached meter
+theme[cached_start]="#076678"
+theme[cached_mid]="#427b58"
+theme[cached_end]="#79740e"
+
+# Mem/Disk available meter
+theme[available_start]="#af3a03"
+theme[available_mid]="#b57614"
+theme[available_end]="#79740e"
+
+# Mem/Disk used meter
+theme[used_start]="#79740e"
+theme[used_mid]="#b57614"
+theme[used_end]="#9d0006"
+
+# Download graph colors
+theme[download_start]="#8f3f71"
+theme[download_mid]="#79740e"
+theme[download_end]="#427b58"
+
+# Upload graph colors
+theme[upload_start]="#8f3f71"
+theme[upload_mid]="#b57614"
+theme[upload_end]="#af3a03"
+
+# Process box color gradient for threads, mem and cpu usage
+theme[process_start]="#79740e"
+theme[process_mid]="#b57614"
+theme[process_end]="#9d0006"
