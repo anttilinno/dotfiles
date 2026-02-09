@@ -16,6 +16,8 @@ zinit snippet OMZP::docker-compose
 
 # user aliases
 alias n="nvim"
+alias j="goto"
+alias cz="chezmoi"
 unalias gsd 2>/dev/null
 alias gsd="claude --dangerously-skip-permissions"
 
