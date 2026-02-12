@@ -289,9 +289,8 @@ gui:
       - "$BG1"
 EOF
 
-    # Reload applications
+    # Reload i3 (this also relaunches polybar via exec_always)
     i3-msg reload &>/dev/null
-    "$HOME/.config/polybar/launch.sh" &>/dev/null &
 
     notify-send "Theme Switched" "Gruvbox $theme applied" 2>/dev/null
 }
