@@ -9,7 +9,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 exec --no-startup-id flameshot
 exec --no-startup-id feh --bg-fill ~/.config/i3/wallpaper.png
-exec --no-startup-id setxkbmap -layout us,ee -option grp:alt_shift_toggle
+exec_always --no-startup-id setxkbmap -layout us,ee -option grp:alt_shift_toggle
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Audio
