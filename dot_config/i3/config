@@ -131,3 +131,7 @@ default_floating_border pixel 1
 # Floating mail window from polybar
 for_window [class="floating-mail"] floating enable, resize set 1200 800, move position center
 for_window [class="floating-calendar"] floating enable, resize set 1200 800, move position center
+for_window [class="floating-btop"] floating enable, resize set 1200 800, move position center
+for_window [class="Pavucontrol"] floating enable, resize set 1200 800, move position center
+for_window [class="Blueman-manager"] floating enable, resize set 1200 800, move position center
+for_window [class="floating-monitors"] floating enable, resize set 1200 800, move position center
