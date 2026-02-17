@@ -127,3 +127,6 @@ gaps outer 0
 # No titlebars
 default_border pixel 1
 default_floating_border pixel 1
+
+# Floating mail window from polybar
+for_window [class="floating-mail"] floating enable, resize set 1200 800, move position center
