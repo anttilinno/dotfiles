@@ -9,6 +9,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 exec --no-startup-id flameshot
 exec --no-startup-id feh --bg-fill ~/.config/i3/wallpaper.png
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
 exec_always --no-startup-id setxkbmap -layout us,ee -option grp:alt_shift_toggle
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
@@ -23,7 +24,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # Applications
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec wezterm
 bindsym $mod+Shift+q kill
 bindsym $mod+m exec "rofi -modes drun,run -show drun"
 

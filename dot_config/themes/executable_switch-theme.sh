@@ -55,6 +55,7 @@ EOF
     cat > "$HOME/.config/wezterm/colors.lua" << EOF
 return "$WEZTERM_SCHEME"
 EOF
+    touch "$HOME/.config/wezterm/wezterm.lua"
 
     # Update GTK
     mkdir -p "$HOME/.config/gtk-3.0"
@@ -289,8 +290,9 @@ gui:
       - "$BG1"
 EOF
 
-    # Reload i3 (this also relaunches polybar via exec_always)
+    # Reload i3 and relaunch polybar
     i3-msg reload &>/dev/null
+    setsid "$HOME/.config/polybar/launch.sh" &>/dev/null &
 
     notify-send "Theme Switched" "Gruvbox $theme applied" 2>/dev/null
 }

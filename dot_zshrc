@@ -18,6 +18,7 @@ zinit snippet OMZP::docker-compose
 alias n="nvim"
 alias j="goto"
 alias cz="chezmoi"
+alias czp="chezmoi --source ~/Repos/Misc/shared-datafiles"
 unalias gsd 2>/dev/null
 alias gsd="claude --dangerously-skip-permissions"
 
@@ -26,5 +27,7 @@ source /home/antti/.config/goto/goto.zsh
 
 # Prompt (load last)
 eval "$(starship init zsh)"
+
+eval "$(mise activate zsh)"
 
 export EDITOR=nvim
