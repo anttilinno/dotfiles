@@ -22,6 +22,19 @@ alias czp="chezmoi --source ~/Repos/Misc/shared-datafiles"
 unalias gsd 2>/dev/null
 alias gsd="claude --dangerously-skip-permissions"
 
+# docker exec with auto shell detection
+dexec() {
+  if [ -z "$1" ]; then
+    echo "Usage: dexec <container>"
+    return 1
+  fi
+  if docker exec "$1" bash -c '' 2>/dev/null; then
+    docker exec -it "$1" bash
+  else
+    docker exec -it "$1" sh
+  fi
+}
+
 # goto - directory navigation
 source /home/antti/.config/goto/goto.zsh
 
@@ -31,3 +44,6 @@ eval "$(starship init zsh)"
 eval "$(mise activate zsh)"
 
 export EDITOR=nvim
+
+# Secrets (managed via shared-datafiles)
+[ -f ~/.secrets ] && source ~/.secrets
