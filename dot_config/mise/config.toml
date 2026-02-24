@@ -1,0 +1,7 @@
+[tools]
+node = "lts"
+uv = "latest"
+"github:anttilinno/todo-calendar" = "latest"
+"github:anttilinno/goto" = { version = "latest", bin = "goto-bin" }
+"github:letmutex/gitas" = "0.0.6"
+"pipx:anttilinno/frogmouth" = "latest"
