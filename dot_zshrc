@@ -21,8 +21,6 @@ alias cz="chezmoi"
 alias czp="chezmoi --source ~/Repos/Misc/shared-datafiles"
 unalias gsd 2>/dev/null
 alias gsd="claude --dangerously-skip-permissions"
-alias peterpecker='sudo reboot'
-alias donthurtme='sudo shutdown now'
 
 # docker exec with auto shell detection
 dexec() {
