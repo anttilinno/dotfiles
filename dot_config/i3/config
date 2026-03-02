@@ -1,5 +1,6 @@
 include ~/.config/i3/colors
 set $mod Mod4
+set $browser zen-browser
 
 font pango:monospace 10
 
@@ -29,27 +30,20 @@ bindsym $mod+Shift+q kill
 bindsym $mod+m exec "rofi -modes drun,run -show drun"
 
 # Focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # Move windows
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # Layout
-bindsym $mod+b split h
+bindsym $mod+h split h
+bindsym $mod+b exec $browser
 bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 bindsym $mod+s layout stacking
@@ -105,10 +99,6 @@ bindsym $mod+Shift+apostrophe exec --no-startup-id ~/.config/i3/toggle-screensav
 
 # Resize mode
 mode "resize" {
-    bindsym h resize shrink width 10 px or 10 ppt
-    bindsym j resize grow height 10 px or 10 ppt
-    bindsym k resize shrink height 10 px or 10 ppt
-    bindsym l resize grow width 10 px or 10 ppt
     bindsym Left resize shrink width 10 px or 10 ppt
     bindsym Down resize grow height 10 px or 10 ppt
     bindsym Up resize shrink height 10 px or 10 ppt
