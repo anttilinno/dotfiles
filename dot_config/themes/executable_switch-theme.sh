@@ -290,6 +290,11 @@ gui:
       - "$BG1"
 EOF
 
+    # Apply theme to running Neovim instances
+    for sock in /run/user/$(id -u)/nvim.*.0; do
+        nvim --server "$sock" --remote-expr "execute('set background=$theme')" 2>/dev/null
+    done
+
     # Reload i3 and relaunch polybar
     i3-msg reload &>/dev/null
     setsid "$HOME/.config/polybar/launch.sh" &>/dev/null &
