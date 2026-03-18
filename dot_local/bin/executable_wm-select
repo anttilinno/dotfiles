@@ -1,0 +1,12 @@
+#!/bin/bash
+
+options=("i3" "niri")
+
+echo "Select window manager:"
+select wm in "${options[@]}"; do
+    case $wm in
+        i3) exec startx ;;
+        niri) exec niri-session ;;
+        *) echo "Invalid option" ;;
+    esac
+done
