@@ -113,7 +113,7 @@ apply_preset() {
     if [[ "${confirm:-Y}" =~ ^[Yy]?$ ]]; then
         eval "$cmd"
         setxkbmap -layout us,ee -option grp:alt_shift_toggle
-        sleep 1
+        sleep 2
         feh --bg-fill ~/.config/i3/wallpaper.png &
         ~/.config/polybar/launch.sh &
         echo "Done."
@@ -286,7 +286,7 @@ read -rp "Apply? [Y/n] " confirm
 if [[ "${confirm:-Y}" =~ ^[Yy]?$ ]]; then
     eval "$cmd"
     setxkbmap -layout us,ee -option grp:alt_shift_toggle
-    sleep 1
+    sleep 2
     feh --bg-fill ~/.config/i3/wallpaper.png &
     ~/.config/polybar/launch.sh &
     echo "Done."

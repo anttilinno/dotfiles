@@ -9,6 +9,12 @@ while pgrep -u $UID -x polybar >/dev/null; do sleep 0.2; done
 
 rm -f /tmp/polybar-*.log
 
+# Wait for xrandr to detect connected monitors (up to 10s)
+for i in $(seq 1 20); do
+    xrandr --query | grep -q " connected" && break
+    sleep 0.5
+done
+
 # Wait until polybar detects at least one monitor (up to 10s)
 for i in $(seq 1 20); do
     polybar --list-monitors 2>/dev/null | grep -q ':' && break
