@@ -111,6 +111,12 @@ apply_preset() {
     echo ""
     read -rp "Apply? [Y/n] " confirm
     if [[ "${confirm:-Y}" =~ ^[Yy]?$ ]]; then
+        # Kill polybar before xrandr to prevent screenchange-reload on dead monitors
+        killall -q polybar
+        sleep 0.3
+        killall -q -9 polybar 2>/dev/null
+        while pgrep -u $UID -x polybar >/dev/null; do sleep 0.2; done
+
         eval "$cmd"
         setxkbmap -layout us,ee -option grp:alt_shift_toggle
         sleep 2
@@ -284,6 +290,12 @@ echo "$cmd"
 echo ""
 read -rp "Apply? [Y/n] " confirm
 if [[ "${confirm:-Y}" =~ ^[Yy]?$ ]]; then
+    # Kill polybar before xrandr to prevent screenchange-reload on dead monitors
+    killall -q polybar
+    sleep 0.3
+    killall -q -9 polybar 2>/dev/null
+    while pgrep -u $UID -x polybar >/dev/null; do sleep 0.2; done
+
     eval "$cmd"
     setxkbmap -layout us,ee -option grp:alt_shift_toggle
     sleep 2
