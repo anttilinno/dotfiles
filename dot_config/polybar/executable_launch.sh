@@ -25,7 +25,8 @@ PRIMARY=$(polybar --list-monitors | grep "(primary)" | cut -d":" -f1)
 # If no primary is set, use the first monitor
 [ -z "$PRIMARY" ] && PRIMARY=$(polybar --list-monitors | head -1 | cut -d":" -f1)
 
-for m in $(polybar --list-monitors | cut -d":" -f1); do
+# Only spawn polybar for monitors that have an actual resolution (i.e. are enabled)
+for m in $(polybar --list-monitors | grep ':' | cut -d":" -f1); do
     if [ "$m" = "$PRIMARY" ]; then
         MONITOR=$m polybar main-primary 2>&1 | tee -a /tmp/polybar-$m.log &
     else
