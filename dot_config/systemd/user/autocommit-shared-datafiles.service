@@ -1,0 +1,13 @@
+[Unit]
+Description=Autocommit shared-datafiles on file changes
+After=default.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/Repos/Misc/shared-datafiles
+ExecStart=%h/Repos/Misc/shared-datafiles/.automation/autocommit.sh
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
