@@ -3,6 +3,12 @@
 
 set -euo pipefail
 
+# --- Debug logging ---
+DEBUG_LOG="/tmp/monitors-debug.log"
+echo "========================================" >> "$DEBUG_LOG"
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] monitors.sh started" >> "$DEBUG_LOG"
+debug() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" >> "$DEBUG_LOG"; }
+
 # --- Presets ---
 # Format: name|mon1:pos,mon2:pos,...|primary|off_monitors
 # pos: left-to-right order (1,2,3...), alignment is always bottom
@@ -29,6 +35,11 @@ while IFS= read -r line; do
         fi
     fi
 done < <(xrandr --query)
+
+debug "Connected monitors: ${MONITORS[*]:-none}"
+for m in "${MONITORS[@]}"; do
+    debug "  $m preferred=${PREFERRED_RES[$m]:-unknown} all=${ALL_RES[$m]:-unknown}"
+done
 
 if (( ${#MONITORS[@]} == 0 )); then
     echo "No connected monitors found."
@@ -61,7 +72,9 @@ for preset in "${PRESETS[@]}"; do
         done
     fi
     $all_present && AVAILABLE_PRESETS+=("$preset")
+    debug "Preset '$pname': all_present=$all_present"
 done
+debug "Available presets: ${#AVAILABLE_PRESETS[@]}"
 
 apply_preset() {
     local preset="$1"
@@ -107,23 +120,40 @@ apply_preset() {
         done
     fi
 
+    debug "Preset xrandr cmd: $cmd"
     echo "$cmd"
     echo ""
     read -rp "Apply? [Y/n] " confirm
     if [[ "${confirm:-Y}" =~ ^[Yy]?$ ]]; then
+        debug "User confirmed preset apply"
         # Kill polybar before xrandr to prevent screenchange-reload on dead monitors
+        debug "Killing polybar..."
         killall -q polybar || true
         sleep 0.3
         killall -q -9 polybar 2>/dev/null || true
         while pgrep -u $UID -x polybar >/dev/null; do sleep 0.2; done
+        debug "Polybar killed"
 
+        debug "Running xrandr..."
         eval "$cmd"
+        debug "xrandr exit code: $?"
         setxkbmap -layout us,ee -option grp:alt_shift_toggle
+        debug "Waiting 2s for xrandr to settle..."
         sleep 2
+        debug "xrandr state after settle:"
+        xrandr --query 2>&1 | grep -E "connected|^\s+[0-9]+x[0-9]+" >> "$DEBUG_LOG" 2>&1
+        debug "polybar --list-monitors:"
+        polybar --list-monitors >> "$DEBUG_LOG" 2>&1
+        debug "Launching polybar..."
         setsid ~/.config/polybar/launch.sh &>/dev/null &
+        debug "polybar launch.sh PID: $!"
         setsid feh --bg-fill ~/.config/i3/wallpaper.png &>/dev/null &
+        sleep 2
+        debug "polybar processes after launch:"
+        pgrep -a polybar >> "$DEBUG_LOG" 2>&1 || debug "NO polybar processes found!"
         echo "Done."
     else
+        debug "User cancelled preset apply"
         echo "Cancelled."
     fi
 }
@@ -286,22 +316,39 @@ for m in "${MONITORS[@]}"; do
     $skip || cmd+=" --output $m --off"
 done
 
+debug "Wizard xrandr cmd: $cmd"
 echo "$cmd"
 echo ""
 read -rp "Apply? [Y/n] " confirm
 if [[ "${confirm:-Y}" =~ ^[Yy]?$ ]]; then
+    debug "User confirmed wizard apply"
     # Kill polybar before xrandr to prevent screenchange-reload on dead monitors
+    debug "Killing polybar..."
     killall -q polybar || true
     sleep 0.3
     killall -q -9 polybar 2>/dev/null || true
     while pgrep -u $UID -x polybar >/dev/null; do sleep 0.2; done
+    debug "Polybar killed"
 
+    debug "Running xrandr..."
     eval "$cmd"
+    debug "xrandr exit code: $?"
     setxkbmap -layout us,ee -option grp:alt_shift_toggle
+    debug "Waiting 2s for xrandr to settle..."
     sleep 2
+    debug "xrandr state after settle:"
+    xrandr --query 2>&1 | grep -E "connected|^\s+[0-9]+x[0-9]+" >> "$DEBUG_LOG" 2>&1
+    debug "polybar --list-monitors:"
+    polybar --list-monitors >> "$DEBUG_LOG" 2>&1
+    debug "Launching polybar..."
     setsid ~/.config/polybar/launch.sh &>/dev/null &
+    debug "polybar launch.sh PID: $!"
     setsid feh --bg-fill ~/.config/i3/wallpaper.png &>/dev/null &
+    sleep 2
+    debug "polybar processes after launch:"
+    pgrep -a polybar >> "$DEBUG_LOG" 2>&1 || debug "NO polybar processes found!"
     echo "Done."
 else
+    debug "User cancelled wizard apply"
     echo "Cancelled."
 fi
