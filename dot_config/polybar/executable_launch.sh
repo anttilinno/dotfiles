@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Send SIGTERM then SIGKILL to ensure polybar dies before screenchange-reload fires
-killall -q polybar
+killall -q polybar || true
 sleep 0.3
-killall -q -9 polybar 2>/dev/null
+killall -q -9 polybar 2>/dev/null || true
 
 while pgrep -u $UID -x polybar >/dev/null; do sleep 0.2; done
 

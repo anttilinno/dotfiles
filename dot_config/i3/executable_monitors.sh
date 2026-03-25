@@ -112,16 +112,16 @@ apply_preset() {
     read -rp "Apply? [Y/n] " confirm
     if [[ "${confirm:-Y}" =~ ^[Yy]?$ ]]; then
         # Kill polybar before xrandr to prevent screenchange-reload on dead monitors
-        killall -q polybar
+        killall -q polybar || true
         sleep 0.3
-        killall -q -9 polybar 2>/dev/null
+        killall -q -9 polybar 2>/dev/null || true
         while pgrep -u $UID -x polybar >/dev/null; do sleep 0.2; done
 
         eval "$cmd"
         setxkbmap -layout us,ee -option grp:alt_shift_toggle
         sleep 2
-        feh --bg-fill ~/.config/i3/wallpaper.png &
-        ~/.config/polybar/launch.sh &
+        setsid ~/.config/polybar/launch.sh &>/dev/null &
+        setsid feh --bg-fill ~/.config/i3/wallpaper.png &>/dev/null &
         echo "Done."
     else
         echo "Cancelled."
@@ -291,16 +291,16 @@ echo ""
 read -rp "Apply? [Y/n] " confirm
 if [[ "${confirm:-Y}" =~ ^[Yy]?$ ]]; then
     # Kill polybar before xrandr to prevent screenchange-reload on dead monitors
-    killall -q polybar
+    killall -q polybar || true
     sleep 0.3
-    killall -q -9 polybar 2>/dev/null
+    killall -q -9 polybar 2>/dev/null || true
     while pgrep -u $UID -x polybar >/dev/null; do sleep 0.2; done
 
     eval "$cmd"
     setxkbmap -layout us,ee -option grp:alt_shift_toggle
     sleep 2
-    feh --bg-fill ~/.config/i3/wallpaper.png &
-    ~/.config/polybar/launch.sh &
+    setsid ~/.config/polybar/launch.sh &>/dev/null &
+    setsid feh --bg-fill ~/.config/i3/wallpaper.png &>/dev/null &
     echo "Done."
 else
     echo "Cancelled."
