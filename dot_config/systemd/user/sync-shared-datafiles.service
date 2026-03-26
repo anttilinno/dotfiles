@@ -1,0 +1,14 @@
+[Unit]
+Description=Pull shared-datafiles from remote on login
+After=network-online.target
+Wants=network-online.target
+Before=autocommit-shared-datafiles.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/Repos/Misc/shared-datafiles
+ExecStart=/usr/bin/git pull --rebase --autostash
+TimeoutStartSec=30
+
+[Install]
+WantedBy=default.target

@@ -6,6 +6,7 @@ After=default.target
 Type=simple
 WorkingDirectory=%h/Repos/Misc/shared-datafiles
 ExecStart=%h/Repos/Misc/shared-datafiles/.automation/autocommit.sh
+ExecStop=/usr/bin/git push
 Restart=on-failure
 RestartSec=5
 

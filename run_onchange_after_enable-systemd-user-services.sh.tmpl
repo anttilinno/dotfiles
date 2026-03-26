@@ -1,6 +1,11 @@
 #!/bin/bash
 # Reload and enable systemd user services after changes
 # Hash: {{ include "dot_config/systemd/user/autocommit-shared-datafiles.service" | sha256sum }}
+# Hash: {{ include "dot_config/systemd/user/sync-shared-datafiles.service" | sha256sum }}
+# Hash: {{ include "dot_config/systemd/user/push-shared-datafiles.service" | sha256sum }}
+# Hash: {{ include "dot_config/systemd/user/push-shared-datafiles.timer" | sha256sum }}
 
 systemctl --user daemon-reload
+systemctl --user enable --now sync-shared-datafiles.service
 systemctl --user enable --now autocommit-shared-datafiles.service
+systemctl --user enable --now push-shared-datafiles.timer
