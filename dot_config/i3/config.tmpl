@@ -18,10 +18,10 @@ exec_always --no-startup-id setxkbmap -layout us,ee -option grp:alt_shift_toggle
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 {{ end -}}
 {{ if eq .role "kodi" -}}
-exec --no-startup-id kodi
-exec --no-startup-id zen-browser
 assign [class="Kodi"] $ws1
 assign [class="Zen"] $ws2
+exec --no-startup-id kodi
+exec --no-startup-id i3-msg 'workspace $ws2; exec zen-browser; workspace $ws1'
 {{ end }}
 # Audio
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
