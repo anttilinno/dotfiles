@@ -7,7 +7,7 @@ Before=autocommit-shared-datafiles.service
 [Service]
 Type=oneshot
 WorkingDirectory=%h/Repos/Misc/shared-datafiles
-ExecStart=/usr/bin/git pull --rebase --autostash
+ExecStart=%h/Repos/Misc/shared-datafiles/.automation/sync.sh
 TimeoutStartSec=30
 
 [Install]

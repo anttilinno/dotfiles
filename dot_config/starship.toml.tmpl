@@ -1,0 +1,5 @@
+{{- if eq .role "retro-laptop" -}}
+{{ template "starship-retro-laptop.toml" . }}
+{{- else -}}
+{{ template "starship-gruvbox-rainbow.toml" . }}
+{{- end -}}

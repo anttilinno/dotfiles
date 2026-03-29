@@ -1,1 +1,6 @@
 Xcursor.size: 16
+
+URxvt.font: xft:JetBrainsMono Nerd Font:size=11
+URxvt.boldFont: xft:JetBrainsMono Nerd Font:bold:size=11
+URxvt.letterSpace: -1
+URxvt.lineSpace: 0
