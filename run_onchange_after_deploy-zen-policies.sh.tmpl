@@ -1,0 +1,6 @@
+#!/bin/bash
+# Deploy Zen Browser policies to system directory (requires sudo)
+# Hash: {{ include "dot_zen/distribution/policies.json" | sha256sum }}
+
+sudo cp "$HOME/.zen/distribution/policies.json" /opt/zen-browser-bin/distribution/policies.json
+echo "Zen Browser policies deployed to /opt/zen-browser-bin/distribution/"
