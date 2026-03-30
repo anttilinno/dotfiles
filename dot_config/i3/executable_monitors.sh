@@ -137,7 +137,6 @@ apply_preset() {
         debug "Running xrandr..."
         eval "$cmd"
         debug "xrandr exit code: $?"
-        setxkbmap -layout us,ee -option grp:alt_shift_toggle
         debug "Waiting 2s for xrandr to settle..."
         sleep 2
         debug "xrandr state after settle:"
@@ -333,7 +332,6 @@ if [[ "${confirm:-Y}" =~ ^[Yy]?$ ]]; then
     debug "Running xrandr..."
     eval "$cmd"
     debug "xrandr exit code: $?"
-    setxkbmap -layout us,ee -option grp:alt_shift_toggle
     debug "Waiting 2s for xrandr to settle..."
     sleep 2
     debug "xrandr state after settle:"

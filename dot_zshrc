@@ -3,6 +3,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Cursor size
 export XCURSOR_SIZE=16
+export SUDO_ASKPASS=/usr/lib/ssh/ssh-askpass
 
 # Zinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"

@@ -36,7 +36,5 @@ eval "$CMD"
 # Restart polybar on all monitors
 ~/.config/polybar/launch.sh &
 
-# Restore keyboard layout toggle (xrandr can reset xkb options)
-setxkbmap -layout us,ee -option grp:alt_shift_toggle
 
 echo "Monitor setup complete"

@@ -15,7 +15,6 @@ exec --no-startup-id feh --bg-fill ~/.config/i3/wallpaper.png
 {{ if ne .role "retro-laptop" -}}
 exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
 {{ end -}}
-exec_always --no-startup-id setxkbmap -layout us,ee -option grp:alt_shift_toggle
 {{ if eq .role "desktop" -}}
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 {{ end -}}
