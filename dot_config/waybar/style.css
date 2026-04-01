@@ -1,0 +1,64 @@
+* {
+  font-family: "JetBrains Mono", "Font Awesome 6 Free", monospace;
+  font-size: 13px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: #282828;
+  color: #ebdbb2;
+}
+
+#workspaces button {
+  padding: 0 8px;
+  margin: 4px 2px;
+  border-radius: 4px;
+  color: #928374;
+  background: transparent;
+  border: none;
+}
+
+#workspaces button.active {
+  color: #282828;
+  background: #b8bb26;
+  font-weight: bold;
+}
+
+#workspaces button.urgent {
+  color: #282828;
+  background: #fb4934;
+}
+
+#workspaces button:hover {
+  background: #3c3836;
+  color: #ebdbb2;
+}
+
+#tray {
+  padding: 0 8px;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+}
+
+#disk,
+#cpu,
+#memory,
+#custom-mail {
+  padding: 0 10px;
+  color: #a89984;
+}
+
+#custom-mail.has-mail {
+  color: #fabd2f;
+}
+
+#clock {
+  padding: 0 12px;
+  color: #ebdbb2;
+}

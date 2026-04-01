@@ -1,6 +1,0 @@
-export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
-export SUDO_ASKPASS=/usr/lib/ssh/ssh-askpass
-
-if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
-  exec startx
-fi

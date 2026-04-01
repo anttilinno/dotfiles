@@ -4,8 +4,8 @@
 mkdir -p "$HOME/.local/bin"
 
 echo "Installing goto..."
-curl -sL "https://github.com/anttilinno/goto/releases/download/latest/goto-linux-amd64" -o "$HOME/.local/bin/goto"
-chmod +x "$HOME/.local/bin/goto"
+curl -sL "https://github.com/anttilinno/goto/releases/download/latest/goto-linux-amd64" -o "$HOME/.local/bin/goto-bin"
+chmod +x "$HOME/.local/bin/goto-bin"
 
 echo "Installing todo-calendar..."
 curl -sL "https://github.com/anttilinno/todo-calendar/releases/latest/download/todo-calendar-linux-amd64" -o "$HOME/.local/bin/todo-calendar"
