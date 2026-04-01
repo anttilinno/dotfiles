@@ -1,19 +1,20 @@
 * {
   font-family: "JetBrains Mono", "Font Awesome 6 Free", monospace;
   font-size: 13px;
+  font-weight: 600;
   min-height: 0;
 }
 
 window#waybar {
   background: #282828;
-  color: #ebdbb2;
+  color: #ffffff;
 }
 
 #workspaces button {
   padding: 0 8px;
   margin: 4px 2px;
   border-radius: 4px;
-  color: #928374;
+  color: #ffffff;
   background: transparent;
   border: none;
 }
@@ -31,7 +32,7 @@ window#waybar {
 
 #workspaces button:hover {
   background: #3c3836;
-  color: #ebdbb2;
+  color: #ffffff;
 }
 
 #tray {
@@ -51,7 +52,7 @@ window#waybar {
 #memory,
 #custom-mail {
   padding: 0 10px;
-  color: #a89984;
+  color: #ffffff;
 }
 
 #custom-mail.has-mail {
@@ -60,5 +61,5 @@ window#waybar {
 
 #clock {
   padding: 0 12px;
-  color: #ebdbb2;
+  color: #ffffff;
 }

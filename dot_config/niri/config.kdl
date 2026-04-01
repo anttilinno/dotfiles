@@ -84,7 +84,7 @@ output "DP-2" {
 // https://yalter.github.io/niri/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 16
+    gaps 8
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -332,12 +332,6 @@ window-rule {
     open-on-output "DP-3"
 }
 
-// Steam games open fullscreen
-window-rule {
-    match app-id=r#"^steam_app_"#
-    open-fullscreen true
-}
-
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
     // in the end. To find an XKB name for a particular key, you may use a program
@@ -431,14 +425,18 @@ binds {
     Mod+Shift+K     { focus-monitor-up; }
     Mod+Shift+L     { focus-monitor-right; }
 
-    Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
-    Mod+Shift+Ctrl+Down  { move-window-to-monitor-down; }
-    Mod+Shift+Ctrl+Up    { move-window-to-monitor-up; }
-    Mod+Shift+Ctrl+Right { move-window-to-monitor-right; }
-    Mod+Shift+Ctrl+H     { move-window-to-monitor-left; }
-    Mod+Shift+Ctrl+J     { move-window-to-monitor-down; }
-    Mod+Shift+Ctrl+K     { move-window-to-monitor-up; }
-    Mod+Shift+Ctrl+L     { move-window-to-monitor-right; }
+    Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+    Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
+
+    // Alternatively, there are commands to move just a single window:
+    // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
+    // ...
 
     // And you can also move a whole workspace to another monitor:
     // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
