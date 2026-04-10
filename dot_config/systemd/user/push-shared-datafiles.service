@@ -8,3 +8,5 @@ Type=oneshot
 WorkingDirectory=%h/Repos/Misc/shared-datafiles
 ExecStart=/usr/bin/git push
 TimeoutStartSec=30
+Restart=on-failure
+RestartSec=10s

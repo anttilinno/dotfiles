@@ -9,6 +9,8 @@ Type=oneshot
 WorkingDirectory=%h/Repos/Misc/shared-datafiles
 ExecStart=%h/Repos/Misc/shared-datafiles/.automation/sync.sh
 TimeoutStartSec=30
+Restart=on-failure
+RestartSec=10s
 
 [Install]
 WantedBy=default.target
