@@ -143,6 +143,9 @@ EOF
 EOF
     fi
 
+    # Update foot
+    "$HOME/.config/foot/switch-theme.sh" "gruvbox-$theme" 2>/dev/null
+
     # Update btop
     if [ -f "$HOME/.config/btop/btop.conf" ]; then
         sed -i "s/^color_theme = .*/color_theme = \"gruvbox-$theme\"/" "$HOME/.config/btop/btop.conf"
