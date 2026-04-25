@@ -1,0 +1,18 @@
+
+[[Snippets]]
+  Description = "Write ISO file to thumbstick"
+  Output = ""
+  Tag = ["iso"]
+  command = "sudo dd if=<iso=/path/to/image.iso> of=<device=/dev/sdX> bs=4M status=progress conv=fsync oflag=direct;sync"
+
+[[Snippets]]
+  Description = "prod-sql"
+  Output = ""
+  Tag = ["ssh", "db"]
+  command = "ssh -fN -L 15432:begin-db-prod.ctzrsmknrr5i.eu-central-1.rds.amazonaws.com:5432 prod"
+
+[[Snippets]]
+  Description = "dev-sql"
+  Output = ""
+  Tag = ["ssh", "db"]
+  command = "ssh -fN -L 25432:begin-db-dev.chjbzefkxgyy.eu-central-1.rds.amazonaws.com:5432 dev"
