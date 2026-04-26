@@ -15,7 +15,7 @@
   Column = 40
   Editor = "nvim"
   Format = "[$description]: $command $tags"
-  SelectCmd = "fzf --ansi --layout=reverse --border --height=90% --pointer=* --cycle --prompt=Snippets:"
+  SelectCmd = "tv --input-header Snippets --preview-command 'echo {}' --preview-size 30"
   SnippetDirs = []
   SnippetFile = "/home/antti/.config/pet/snippet.toml"
   SortBy = ""
