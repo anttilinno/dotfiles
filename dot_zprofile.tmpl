@@ -1,5 +1,6 @@
 export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
 export SUDO_ASKPASS=/usr/lib/ssh/ssh-askpass
+export GITHUB_TOKEN="$(gh auth token 2>/dev/null)"
 
 if [ -z "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
 {{ if eq .session "wayland" -}}
