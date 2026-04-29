@@ -1,0 +1,25 @@
+export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
+export SUDO_ASKPASS=/usr/lib/ssh/ssh-askpass
+export GITHUB_TOKEN="$(gh auth token 2>/dev/null)"
+
+if [ -z "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
+  _has_niri=0; _has_x11=0
+  command -v niri-session >/dev/null 2>&1 && _has_niri=1
+  command -v startx       >/dev/null 2>&1 && _has_x11=1
+
+  if [ "$_has_niri" = 1 ] && [ "$_has_x11" = 1 ]; then
+    echo "Select session:"
+    echo "  1) niri (Wayland) [default]"
+    echo "  2) X11 (startx)"
+    read "?Choice [1]: " _session
+    case "$_session" in
+      2|x11|startx) exec startx ;;
+      *)            exec niri-session -l ;;
+    esac
+  elif [ "$_has_niri" = 1 ]; then
+    exec niri-session -l
+  elif [ "$_has_x11" = 1 ]; then
+    exec startx
+  fi
+  unset _has_niri _has_x11 _session
+fi
