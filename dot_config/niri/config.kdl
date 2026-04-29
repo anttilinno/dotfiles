@@ -67,9 +67,9 @@ input {
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
-// 1440p on the left
+// 4K on the left
 output "DP-3" {
-    mode "2560x1440@59.951"
+    mode "3840x2160@59.999"
     position x=0 y=0
 }
 
@@ -588,6 +588,7 @@ binds {
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
+    Mod+Shift+S { screenshot; }
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here
@@ -606,4 +607,7 @@ binds {
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
+
+    // Toggle the laptop's internal display on/off.
+    Mod+Shift+BackSpace { spawn-sh "~/.config/niri/toggle-internal-monitor.sh"; }
 }
