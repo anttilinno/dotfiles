@@ -1,0 +1,49 @@
+# meli config — two Gmail IMAP accounts (work, personal).
+# Credentials are sourced from ~/.secrets.
+#
+# Local mail tree (for any future mbsync/Maildir migration):
+#   ~/Documents/Mail/{work,personal,attachments,drafts}
+
+[accounts.work]
+root_mailbox = "INBOX"
+format = "imap"
+server_hostname = "imap.gmail.com"
+server_port = 993
+server_username = "antti@begin.ee"
+server_password_command = "bash -c 'source ~/.secrets && echo $WORK_GMAIL_APP_PASSWORD'"
+use_starttls = false
+use_tls = true
+identity = "antti@begin.ee"
+display_name = "Antti Linno"
+subscribed_mailboxes = ["INBOX", "[Gmail]/Sent Mail", "[Gmail]/Drafts", "[Gmail]/All Mail", "[Gmail]/Starred", "[Gmail]/Trash", "[Gmail]/Spam"]
+listing.index_style = "Compact"
+composing.store_sent_mail = false
+send_mail = { hostname = "smtp.gmail.com", port = 587, auth = { type = "auto", username = "antti@begin.ee", password = { type = "command_eval", value = "bash -c 'source ~/.secrets && echo $WORK_GMAIL_APP_PASSWORD'" } }, security = { type = "starttls" } }
+
+[accounts.personal]
+root_mailbox = "INBOX"
+format = "imap"
+server_hostname = "imap.gmail.com"
+server_port = 993
+server_username = "antti.linno@gmail.com"
+server_password_command = "bash -c 'source ~/.secrets && echo $GMAIL_APP_PASSWORD'"
+use_starttls = false
+use_tls = true
+identity = "antti.linno@gmail.com"
+display_name = "Antti Linno"
+subscribed_mailboxes = ["INBOX", "[Gmail]/Sent Mail", "[Gmail]/Drafts", "[Gmail]/All Mail", "[Gmail]/Starred", "[Gmail]/Trash", "[Gmail]/Spam"]
+listing.index_style = "Compact"
+composing.store_sent_mail = false
+send_mail = { hostname = "smtp.gmail.com", port = 587, auth = { type = "auto", username = "antti.linno@gmail.com", password = { type = "command_eval", value = "bash -c 'source ~/.secrets && echo $GMAIL_APP_PASSWORD'" } }, security = { type = "starttls" } }
+
+[composing]
+editor_command = "nvim"
+
+[pager]
+html_filter = "w3m -I utf-8 -T text/html"
+
+[notifications]
+script = "notify-send"
+
+[terminal]
+theme = "light"
