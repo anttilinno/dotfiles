@@ -27,4 +27,4 @@ Managed with [chezmoi](https://www.chezmoi.io/). Source dir: `~/.local/share/che
 
 ## Notes
 
-- `i3/wallpaper.jpg` and `i3/lockscreen.jpg` are empty stubs (actual images not tracked)
+- `i3/wallpaper.png` is tracked (used by wpaperd for niri too); `i3/lockscreen.jpg` is an empty stub
