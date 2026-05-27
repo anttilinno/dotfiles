@@ -8,6 +8,7 @@ $username\
 $directory\
 [](fg:color_yellow bg:color_aqua)\
 $git_branch\
+${custom.git_worktree}\
 $git_status\
 [](fg:color_aqua bg:color_blue)\
 $c\
@@ -98,6 +99,14 @@ format = '[[ $symbol $branch ](fg:color_fg0 bg:color_aqua)]($style)'
 [git_status]
 style = "bg:color_aqua"
 format = '[[($all_status$ahead_behind )](fg:color_fg0 bg:color_aqua)]($style)'
+
+[custom.git_worktree]
+description = "Show worktree marker when in a linked git worktree"
+when = '''test "$(git rev-parse --git-dir 2>/dev/null)" != "$(git rev-parse --git-common-dir 2>/dev/null)"'''
+command = "basename $(git rev-parse --show-toplevel)"
+symbol = " "
+style = "bg:color_aqua"
+format = '[[$symbol$output ](fg:color_fg0 bg:color_aqua)]($style)'
 
 [nodejs]
 symbol = ""
