@@ -11,7 +11,8 @@ Managed with [chezmoi](https://www.chezmoi.io/). Source dir: `~/.local/share/che
 ## What's managed
 
 - **Shell**: zshrc, zprofile, starship prompt
-- **WM/Desktop**: i3, polybar, rofi, themes (gruvbox light/dark switcher)
+- **WM/Desktop**: i3, niri, polybar, rofi, themes (gruvbox light/dark switcher)
+- **Bar/Shell**: DankMaterialShell (`DankMaterialShell/` — settings, plugins, themes, zen.css; bar runs via `dms.service` for niri). State files `.changelog-*`/`.firstlaunch` not tracked. Custom `plugins/todoIndicator` shows green/red from `todo-calendar --status`.
 - **Terminal**: wezterm
 - **Tools**: btop, gh, goto, todo-calendar
 - **X11**: xinitrc, Xresources

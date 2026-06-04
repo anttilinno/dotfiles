@@ -1,0 +1,12 @@
+{
+    "id": "todoIndicator",
+    "name": "Todo Indicator",
+    "description": "Calendar icon that turns red when monthly todos are pending, green when clear (todo-calendar --status)",
+    "version": "1.0.0",
+    "author": "antti",
+    "type": "widget",
+    "capabilities": ["dankbar-widget", "monitoring"],
+    "component": "./TodoIndicatorWidget.qml",
+    "icon": "event_available",
+    "requires": ["todo-calendar"]
+}
