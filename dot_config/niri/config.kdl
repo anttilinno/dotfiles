@@ -67,16 +67,17 @@ input {
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
-// 4K on the left
-output "DP-3" {
+// 4K on the left (name-based — survives connector renumbering from dock/hotplug)
+output "LG Electronics LG HDR 4K 203NTGYEG351" {
     mode "3840x2160@59.999"
+    scale 1.25
     position x=0 y=0
 }
 
-// 1080p on the right
-output "DP-2" {
+// 1080p on the right (logical width of 4K at scale 1.25 = 3072)
+output "Dell Inc. DELL P2419H 6MNDMV2" {
     mode "1920x1080@60.000"
-    position x=2560 y=0
+    position x=3072 y=0
 }
 
 // Settings that influence how windows are positioned and sized.
@@ -324,12 +325,12 @@ window-rule {
 // Steam and games on the 1440p monitor
 window-rule {
     match app-id=r#"^steam$"#
-    open-on-output "DP-3"
+    open-on-output "LG Electronics LG HDR 4K 203NTGYEG351"
 }
 
 window-rule {
     match app-id=r#"^gamescope$"#
-    open-on-output "DP-3"
+    open-on-output "LG Electronics LG HDR 4K 203NTGYEG351"
 }
 
 binds {
