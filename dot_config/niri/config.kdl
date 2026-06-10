@@ -67,7 +67,26 @@ input {
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
-// 4K on the left (name-based — survives connector renumbering from dock/hotplug)
+// Both home and work monitor sets are defined. niri applies only the
+// output blocks whose monitors are currently connected and ignores the rest.
+
+// --- HOME setup ---
+// 1440p on the left (name-based — survives connector renumbering from dock/hotplug)
+output "Dell Inc. DELL U2713HM GK0KD32E636L" {
+    mode "2560x1440@59.951"
+    scale 1
+    position x=0 y=0
+}
+
+// 1080p on the right (placed past the 1440p logical width of 2560)
+output "Dell Inc. DELL U2417H 9M34T739350S" {
+    mode "1920x1080@60.000"
+    scale 1
+    position x=2560 y=0
+}
+
+// --- WORK setup ---
+// 4K on the left
 output "LG Electronics LG HDR 4K 203NTGYEG351" {
     mode "3840x2160@59.999"
     scale 1.25
@@ -77,6 +96,7 @@ output "LG Electronics LG HDR 4K 203NTGYEG351" {
 // 1080p on the right (logical width of 4K at scale 1.25 = 3072)
 output "Dell Inc. DELL P2419H 6MNDMV2" {
     mode "1920x1080@60.000"
+    scale 1
     position x=3072 y=0
 }
 
@@ -325,12 +345,12 @@ window-rule {
 // Steam and games on the 1440p monitor
 window-rule {
     match app-id=r#"^steam$"#
-    open-on-output "LG Electronics LG HDR 4K 203NTGYEG351"
+    open-on-output "Dell Inc. DELL U2713HM GK0KD32E636L"
 }
 
 window-rule {
     match app-id=r#"^gamescope$"#
-    open-on-output "LG Electronics LG HDR 4K 203NTGYEG351"
+    open-on-output "Dell Inc. DELL U2713HM GK0KD32E636L"
 }
 
 binds {
