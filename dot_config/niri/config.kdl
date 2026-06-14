@@ -373,6 +373,7 @@ binds {
     Super+Shift+T hotkey-overlay-title="Todo Calendar" { spawn "foot" "todo-calendar"; }
     Super+Shift+M hotkey-overlay-title="Email: meli" { spawn "foot" "meli"; }
     Mod+M hotkey-overlay-title="App Launcher: DMS" { spawn-sh "dms ipc launcher toggle"; }
+    Mod+B hotkey-overlay-title="Open Browser: zen" { spawn "zen-browser"; }
     Super+Shift+X hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
