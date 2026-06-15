@@ -34,6 +34,7 @@ unalias gsd 2>/dev/null
 alias gsd="claude --dangerously-skip-permissions"
 alias peterpecker='sudo reboot'
 alias donthurtme='sudo shutdown now'
+alias bdev-begin='systemd-run --user --scope --unit=begin-dev -p MemoryHigh=14G -p MemoryMax=18G -p MemorySwapMax=2G pnpm dev'
 
 # docker exec with auto shell detection
 dexec() {
