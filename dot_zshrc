@@ -69,3 +69,6 @@ if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)
 # Homelab CA for Node-based tools (bw CLI -> vault.k3s.lan uses step-ca TLS).
 # Node ignores the system trust store, so point it at the homelab root.
 export NODE_EXTRA_CA_CERTS="$HOME/.local/share/homelab-ca/root_ca.crt"
+
+# Pi
+export PATH="/home/antti/.local/share/mise/installs/node/24.14.0/bin:$PATH"
