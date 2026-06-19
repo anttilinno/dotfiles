@@ -184,39 +184,77 @@ EOF
     # Update yazi
     mkdir -p "$HOME/.config/yazi"
     cat > "$HOME/.config/yazi/theme.toml" << EOF
-[manager]
+# yazi 26 theme schema (gruvbox $theme)
+[mgr]
 cwd = { fg = "$AQUA" }
 hovered = { fg = "$BG", bg = "$GREEN", bold = true }
 preview_hovered = { underline = true }
 find_keyword = { fg = "$YELLOW", bold = true }
 find_position = { fg = "$PURPLE", bg = "reset", bold = true }
-marker_selected = { fg = "$GREEN", bg = "$GREEN" }
+symlink_target = { italic = true }
 marker_copied = { fg = "$YELLOW", bg = "$YELLOW" }
 marker_cut = { fg = "$RED", bg = "$RED" }
-tab_active = { fg = "$BG", bg = "$GREEN" }
-tab_inactive = { fg = "$FG", bg = "$BG1" }
-tab_width = 1
-border_symbol = "│"
-border_style = { fg = "$GREY" }
+marker_marked = { fg = "$AQUA", bg = "$AQUA" }
+marker_selected = { fg = "$GREEN", bg = "$GREEN" }
 count_copied = { fg = "$BG", bg = "$YELLOW" }
 count_cut = { fg = "$BG", bg = "$RED" }
 count_selected = { fg = "$BG", bg = "$GREEN" }
+border_symbol = "│"
+border_style = { fg = "$GREY" }
+
+[tabs]
+active = { fg = "$BG", bg = "$GREEN", bold = true }
+inactive = { fg = "$FG", bg = "$BG1" }
+
+[mode]
+normal_main = { fg = "$BG", bg = "$GREEN", bold = true }
+normal_alt = { fg = "$GREEN", bg = "$BG1" }
+select_main = { fg = "$BG", bg = "$YELLOW", bold = true }
+select_alt = { fg = "$YELLOW", bg = "$BG1" }
+unset_main = { fg = "$BG", bg = "$PURPLE", bold = true }
+unset_alt = { fg = "$PURPLE", bg = "$BG1" }
 
 [status]
-separator_open = ""
-separator_close = ""
-separator_style = { fg = "$BG1", bg = "$BG1" }
-mode_normal = { fg = "$BG", bg = "$GREEN", bold = true }
-mode_select = { fg = "$BG", bg = "$YELLOW", bold = true }
-mode_unset = { fg = "$BG", bg = "$PURPLE", bold = true }
+overall = {}
+perm_sep = { fg = "$GREY" }
+perm_type = { fg = "$GREEN" }
+perm_read = { fg = "$YELLOW" }
+perm_write = { fg = "$RED" }
+perm_exec = { fg = "$AQUA" }
 progress_label = { fg = "$FG", bold = true }
 progress_normal = { fg = "$BLUE", bg = "$BG1" }
 progress_error = { fg = "$RED", bg = "$BG1" }
-permissions_t = { fg = "$GREEN" }
-permissions_r = { fg = "$YELLOW" }
-permissions_w = { fg = "$RED" }
-permissions_x = { fg = "$AQUA" }
-permissions_s = { fg = "$GREY" }
+
+[which]
+cols = 3
+mask = { bg = "$BG1" }
+cand = { fg = "$AQUA" }
+rest = { fg = "$GREY" }
+desc = { fg = "$FG" }
+separator = "  "
+separator_style = { fg = "$GREY" }
+
+[confirm]
+border = { fg = "$GREEN" }
+title = { fg = "$GREEN" }
+btn_yes = { reversed = true }
+btn_no = {}
+
+[spot]
+border = { fg = "$GREEN" }
+title = { fg = "$GREEN" }
+tbl_col = { fg = "$BLUE" }
+tbl_cell = { fg = "$YELLOW", reversed = true }
+
+[notify]
+title_info = { fg = "$GREEN" }
+title_warn = { fg = "$YELLOW" }
+title_error = { fg = "$RED" }
+
+[pick]
+border = { fg = "$GREEN" }
+active = { fg = "$PURPLE", bold = true }
+inactive = {}
 
 [input]
 border = { fg = "$GREEN" }
@@ -224,23 +262,15 @@ title = { fg = "$GREEN" }
 value = { fg = "$FG" }
 selected = { reversed = true }
 
-[select]
+[cmp]
 border = { fg = "$GREEN" }
-active = { fg = "$PURPLE" }
-inactive = { fg = "$FG" }
+active = { reversed = true }
+inactive = {}
 
 [tasks]
 border = { fg = "$GREEN" }
 title = { fg = "$GREEN" }
 hovered = { underline = true }
-
-[which]
-mask = { bg = "$BG1" }
-cand = { fg = "$AQUA" }
-rest = { fg = "$GREY" }
-desc = { fg = "$FG" }
-separator = "  "
-separator_style = { fg = "$GREY" }
 
 [help]
 on = { fg = "$AQUA" }
@@ -261,17 +291,17 @@ rules = [
   { mime = "application/x-xz", fg = "$RED" },
   { mime = "application/x-7z-compressed", fg = "$RED" },
   { mime = "application/x-rar", fg = "$RED" },
-  { name = "*.json", fg = "$YELLOW" },
-  { name = "*.md", fg = "$YELLOW" },
-  { name = "*.rs", fg = "$ORANGE" },
-  { name = "*.go", fg = "$AQUA" },
-  { name = "*.py", fg = "$BLUE" },
-  { name = "*.js", fg = "$YELLOW" },
-  { name = "*.ts", fg = "$BLUE" },
-  { name = "*.lua", fg = "$BLUE" },
-  { name = "*.sh", fg = "$GREEN" },
-  { name = "*", fg = "$FG" },
-  { name = "*/", fg = "$BLUE" },
+  { url = "*.json", fg = "$YELLOW" },
+  { url = "*.md", fg = "$YELLOW" },
+  { url = "*.rs", fg = "$ORANGE" },
+  { url = "*.go", fg = "$AQUA" },
+  { url = "*.py", fg = "$BLUE" },
+  { url = "*.js", fg = "$YELLOW" },
+  { url = "*.ts", fg = "$BLUE" },
+  { url = "*.lua", fg = "$BLUE" },
+  { url = "*.sh", fg = "$GREEN" },
+  { url = "*", fg = "$FG" },
+  { url = "*/", fg = "$BLUE" },
 ]
 EOF
 

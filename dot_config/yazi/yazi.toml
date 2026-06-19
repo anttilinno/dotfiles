@@ -1,0 +1,10 @@
+# Open images in imv instead of falling back to xdg-open (chromium).
+[opener]
+image = [
+	{ run = 'imv "$@"', orphan = true, desc = "imv", for = "linux" },
+]
+
+[open]
+prepend_rules = [
+	{ mime = "image/*", use = "image" },
+]

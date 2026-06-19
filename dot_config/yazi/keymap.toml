@@ -1,0 +1,7 @@
+# <Enter> enters a directory or opens a file.
+# Stock yazi maps <Enter> to `open`, which on a directory runs the `edit`
+# opener ($EDITOR=nvim) instead of entering it. smart-enter fixes that.
+[mgr]
+prepend_keymap = [
+	{ on = "<Enter>", run = "plugin smart-enter", desc = "Enter dir or open file" },
+]
