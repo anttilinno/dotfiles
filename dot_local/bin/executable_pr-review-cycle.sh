@@ -74,9 +74,14 @@ fi
 
 mkdir -p "$CACHE_DIR"
 
+# Login used to pick out my own review when summarising outcomes below.
+MY_LOGIN="$(gh api user --jq .login)"
+
 # Iterate PRs. Each PR is reviewed by its own `claude -p` process (launched via
 # `wt switch -x`), so Claude context is cleared between PRs by construction.
 FAILED=()
+# Parallel arrays: one row per PR for the final overview table.
+declare -a SUMMARY_PR SUMMARY_TITLE SUMMARY_STATUS
 # Read PR rows on FD 3 (not stdin): claude -p inside the loop reads stdin, and
 # if the loop fed it via stdin it would drain the remaining rows and only the
 # first PR would ever be reviewed.
@@ -102,15 +107,40 @@ while IFS=$'\t' read -r -u 3 NUM SLUG URL TITLE; do
   # Create/reuse the PR worktree and launch a fresh Claude inside it.
   # -x execs claude in the worktree cwd; --cd ensures the worktree is the cwd.
   echo ">> Worktree + mihhal-review (fresh Claude context)..."
+  STATUS="error"
   if "$WT_BIN" -C "$CLONE" switch "pr:$NUM" -y --cd \
         -x "claude -p --model $MODEL --permission-mode bypassPermissions" \
         -- "/mihhal-review $NUM" </dev/null; then
     echo ">> Done with #$NUM."
+    # Map my latest review on this PR to a human-friendly outcome.
+    case "$(gh api "repos/$SLUG/pulls/$NUM/reviews" \
+              --jq "[.[] | select(.user.login==\"$MY_LOGIN\")] | last | .state" \
+              2>/dev/null)" in
+      APPROVED)          STATUS="approved" ;;
+      CHANGES_REQUESTED) STATUS="rejected" ;;
+      COMMENTED)         STATUS="commented" ;;
+      *)                 STATUS="no review" ;;
+    esac
   else
     echo "!! review failed for $SLUG#$NUM (exit $?)." >&2
     FAILED+=("$SLUG#$NUM")
   fi
+
+  SUMMARY_PR+=("$SLUG#$NUM")
+  SUMMARY_TITLE+=("$TITLE")
+  SUMMARY_STATUS+=("$STATUS")
 done 3< <(jq -r '.[] | [.number, .repository.nameWithOwner, .url, .title] | @tsv' <<<"$PRS_JSON")
+
+echo
+echo ">> Reviewed PR overview:"
+if [[ ${#SUMMARY_PR[@]} -gt 0 ]]; then
+  {
+    printf 'PR\tSTATUS\tTITLE\n'
+    for i in "${!SUMMARY_PR[@]}"; do
+      printf '%s\t%s\t%s\n' "${SUMMARY_PR[$i]}" "${SUMMARY_STATUS[$i]}" "${SUMMARY_TITLE[$i]}"
+    done
+  } | column -t -s $'\t' | sed 's/^/   /'
+fi
 
 echo
 echo ">> Cycle complete."
