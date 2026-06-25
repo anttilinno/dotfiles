@@ -82,6 +82,61 @@ MY_LOGIN="$(gh api user --jq .login)"
 FAILED=()
 # Parallel arrays: one row per PR for the final overview table.
 declare -a SUMMARY_PR SUMMARY_TITLE SUMMARY_STATUS
+
+# Print the overview from an EXIT trap so it always shows, even if the cycle is
+# cut short (set -e/pipefail abort mid-loop, claude killed via Ctrl-C, etc.).
+# Without this the table only printed when every prior command succeeded.
+print_summary() {
+  echo
+  echo ">> Reviewed PR overview:"
+  if [[ ${#SUMMARY_PR[@]} -eq 0 ]]; then
+    echo "   (no PRs processed)"
+    return
+  fi
+
+  # Colors only on a real terminal (skip when piped/redirected).
+  local R='' BOLD='' GRN='' RED='' YLW='' DIM='' CYN=''
+  if [[ -t 1 ]]; then
+    R=$'\e[0m'; BOLD=$'\e[1m'; CYN=$'\e[36m'
+    GRN=$'\e[32m'; RED=$'\e[31m'; YLW=$'\e[33m'; DIM=$'\e[2m'
+  fi
+
+  # Column widths from header + data (plain text; color codes add no width).
+  local h1="PR" h2="STATUS" h3="TITLE" i
+  local w1=${#h1} w2=${#h2} w3=${#h3}
+  for i in "${!SUMMARY_PR[@]}"; do
+    (( ${#SUMMARY_PR[i]}     > w1 )) && w1=${#SUMMARY_PR[i]}
+    (( ${#SUMMARY_STATUS[i]} > w2 )) && w2=${#SUMMARY_STATUS[i]}
+    (( ${#SUMMARY_TITLE[i]}  > w3 )) && w3=${#SUMMARY_TITLE[i]}
+  done
+
+  local V="${CYN}│${R}"
+  seg() { printf '─%.0s' $(seq 1 "$1"); }
+  local s1 s2 s3
+  s1=$(seg $((w1+2))); s2=$(seg $((w2+2))); s3=$(seg $((w3+2)))
+
+  printf '   %s┌%s┬%s┬%s┐%s\n' "$CYN" "$s1" "$s2" "$s3" "$R"
+  printf '   %s %s%-*s%s %s %s%-*s%s %s %s%-*s%s %s\n' \
+    "$V" "$BOLD" "$w1" "$h1" "$R" "$V" "$BOLD" "$w2" "$h2" "$R" "$V" "$BOLD" "$w3" "$h3" "$R" "$V"
+  printf '   %s├%s┼%s┼%s┤%s\n' "$CYN" "$s1" "$s2" "$s3" "$R"
+  for i in "${!SUMMARY_PR[@]}"; do
+    local st="${SUMMARY_STATUS[i]}" c
+    case "$st" in
+      approved)  c=$GRN ;;
+      rejected)  c=$RED ;;
+      commented) c=$YLW ;;
+      *)         c=$DIM ;;
+    esac
+    # Status cell padded manually: %-*s would miscount the color escapes.
+    local pad=$(( w2 - ${#st} ))
+    printf '   %s %-*s %s %s%s%s%*s %s %-*s %s\n' \
+      "$V" "$w1" "${SUMMARY_PR[i]}" \
+      "$V" "$c" "$st" "$R" "$pad" "" \
+      "$V" "$w3" "${SUMMARY_TITLE[i]}" "$V"
+  done
+  printf '   %s└%s┴%s┴%s┘%s\n' "$CYN" "$s1" "$s2" "$s3" "$R"
+}
+trap print_summary EXIT
 # Read PR rows on FD 3 (not stdin): claude -p inside the loop reads stdin, and
 # if the loop fed it via stdin it would drain the remaining rows and only the
 # first PR would ever be reviewed.
@@ -130,17 +185,6 @@ while IFS=$'\t' read -r -u 3 NUM SLUG URL TITLE; do
   SUMMARY_TITLE+=("$TITLE")
   SUMMARY_STATUS+=("$STATUS")
 done 3< <(jq -r '.[] | [.number, .repository.nameWithOwner, .url, .title] | @tsv' <<<"$PRS_JSON")
-
-echo
-echo ">> Reviewed PR overview:"
-if [[ ${#SUMMARY_PR[@]} -gt 0 ]]; then
-  {
-    printf 'PR\tSTATUS\tTITLE\n'
-    for i in "${!SUMMARY_PR[@]}"; do
-      printf '%s\t%s\t%s\n' "${SUMMARY_PR[$i]}" "${SUMMARY_STATUS[$i]}" "${SUMMARY_TITLE[$i]}"
-    done
-  } | column -t -s $'\t' | sed 's/^/   /'
-fi
 
 echo
 echo ">> Cycle complete."
