@@ -262,6 +262,8 @@ layout {
 // See the binds section below for more spawn examples.
 
 spawn-at-startup "xwayland-satellite"
+// Force US layout on every start (index 0); Estonian still reachable via Alt+Shift
+spawn-at-startup "niri" "msg" "action" "switch-layout" "0"
 // DMS (Dank Material Shell) runs via systemd user service (dms.service)
 // Wallpaper handled by DMS via wpaperd
 // spawn-at-startup "wpaperd"
