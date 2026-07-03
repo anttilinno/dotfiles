@@ -1,0 +1,12 @@
+[Unit]
+Description=Huion KD100 keydial daemon (raw HID -> uinput)
+# Keep retrying forever — the device may be absent at login or unplugged.
+StartLimitIntervalSec=0
+
+[Service]
+ExecStart=%h/go/bin/huion-kd100d
+Restart=always
+RestartSec=3s
+
+[Install]
+WantedBy=default.target
