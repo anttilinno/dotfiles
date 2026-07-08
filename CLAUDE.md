@@ -29,4 +29,4 @@ Managed with [chezmoi](https://www.chezmoi.io/). Source dir: `~/.local/share/che
 ## Notes
 
 - `i3/wallpaper.png` is tracked (used by wpaperd for niri too); `i3/lockscreen.jpg` is an empty stub
-- **Huion KD100 keydial**: daemon lives in separate repo `~/Repos/Misc/huion-kd100d` (raw HID → uinput; keycodes in `docs/huion-kd100.md`). Here we track only the `huion-kd100d.service` user unit. Needs the `input` group + the daemon's udev rule installed; binary via `go install`.
+- **Huion KD100 keydial**: daemon lives in separate repo (raw HID → uinput); keycodes documented in `~/Repos/Misc/fleet/docs/huion-kd100.md`. Here we track only the `huion-kd100d.service` user unit + `~/.config/huion-kd100d/keymap.conf`. Needs the `input` group + the daemon's udev rule installed; binary via `go install`.
