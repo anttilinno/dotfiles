@@ -59,6 +59,7 @@
     font-family: var(--font-ui);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
   .wrap {
     max-width: 1040px;
@@ -174,8 +175,10 @@
     color: var(--ink);
     text-align: center;
     padding: 2px;
+    overflow: hidden;
     transition: transform .08s ease, box-shadow .08s ease;
   }
+  .key .lg, .key .tap, .key .hold, .key .sub, .key .ghost { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
   .key.wide { width: 62px; }
   .key .lg { line-height: 1.05; }
   .key .sub {
@@ -214,7 +217,9 @@
   .key.layer .sub { color: color-mix(in srgb, var(--layer) 60%, var(--ink-dim)); }
 
   /* nav / arrows */
-  .key.nav .lg { color: var(--nav); font-weight: 700; font-size: 1.05rem; }
+  .key.nav .lg { color: var(--nav); font-weight: 700; font-size: .72rem; }
+  /* arrow glyphs stay large; multi-letter nav labels shrink to fit */
+  .key.nav .lg.arrow { font-size: 1.05rem; }
 
   /* transparent */
   .key.trns {
@@ -259,12 +264,13 @@
   }
   .card table { width: 100%; border-collapse: collapse; font-size: .84rem; }
   .card td { padding: .22rem 0; vertical-align: top; }
-  .card td:first-child {
+  .card td:first-child:not([colspan]) {
     font-family: var(--font-legend);
     color: var(--ink);
     padding-right: .9rem;
     white-space: nowrap;
   }
+  .card td[colspan] { white-space: normal; }
   .card td:last-child { color: var(--ink-dim); }
   .kbd {
     font-family: var(--font-legend);
@@ -350,12 +356,16 @@
     KC_PGUP:"PgUp", KC_PGDOWN:"PgDn", KC_LEFT:"←", KC_RIGHT:"→", KC_UP:"↑", KC_DOWN:"↓",
     KC_TRNS:"▽", KC_NO:""
   };
-  const MODSYM = { GUI:"⌘", ALT:"⌥", CTL:"⌃", SFT:"⇧" };
+  const MODSYM = { GUI:"Super", ALT:"Alt", CTL:"Ctrl", SFT:"Shift" };
   const NAVCODES = new Set(["KC_LEFT","KC_RIGHT","KC_UP","KC_DOWN","KC_HOME","KC_END","KC_PGUP","KC_PGDOWN","KC_DELETE"]);
 
   function legendOf(code) {
     if (LEG[code] !== undefined) return LEG[code];
-    let m = code.match(/^KC_([A-Z])$/); if (m) return m[1];
+    // mod-tap / layer-tap fall-throughs: show the tapped key
+    let m = code.match(/^[LR](?:GUI|ALT|CTL|SFT)_T\((KC_\w+)\)$/); if (m) return legendOf(m[1]);
+    m = code.match(/^LT\d?\((KC_\w+)\)$/); if (m) return legendOf(m[1]);
+    m = code.match(/^(?:MO|TG|TO|TT|DF)\((\d)\)$/); if (m) return code.replace(/\(.*/, "") + m[1];
+    m = code.match(/^KC_([A-Z])$/); if (m) return m[1];
     m = code.match(/^KC_(\d)$/); if (m) return m[1];
     m = code.match(/^KC_(F\d{1,2})$/); if (m) return m[1];
     return code.replace("KC_","");
@@ -383,8 +393,9 @@
     let cls = "key";
     if (NAVCODES.has(code)) cls += " nav";
     else if (/^KC_F\d{1,2}$/.test(code)) cls += " fn";
+    const arrow = /^KC_(LEFT|RIGHT|UP|DOWN)$/.test(code) ? " arrow" : "";
     const wide = (code === "KC_SPACE" || code === "KC_ENTER" || code === "KC_BSPACE") ? " wide" : "";
-    return { html:`<div class="${cls}${wide}"><span class="lg">${lg}</span></div>` };
+    return { html:`<div class="${cls}${wide}"><span class="lg${arrow}">${lg}</span></div>` };
   }
 
   // physical, left-to-right. right rows already un-mirrored from matrix.
