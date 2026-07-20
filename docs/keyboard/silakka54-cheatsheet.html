@@ -1,0 +1,469 @@
+<title>silakka54 layout cheatsheet</title>
+<style>
+  :root {
+    --bg: #f9f5e3;
+    --plate: #d5c4a1;
+    --plate-edge: #bdae93;
+    --cap: #fbf1c7;
+    --cap-edge: #d5c4a1;
+    --cap-skirt: #b8a888;
+    --ink: #3c3836;
+    --ink-dim: #7c6f64;
+    --line: #d5c4a1;
+    --mod: #d65d0e;      /* home-row mods  */
+    --layer: #427b58;    /* MO / TG        */
+    --nav: #076678;      /* arrows / nav   */
+    --trns: #a89984;     /* transparent    */
+    --accent: #af3a03;
+    --shadow: rgba(60,56,54,.18);
+    --font-legend: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, monospace;
+    --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1d2021;
+      --plate: #32302f;
+      --plate-edge: #1d2021;
+      --cap: #504945;
+      --cap-edge: #3c3836;
+      --cap-skirt: #282828;
+      --ink: #ebdbb2;
+      --ink-dim: #a89984;
+      --line: #3c3836;
+      --mod: #fe8019;
+      --layer: #8ec07c;
+      --nav: #83a598;
+      --trns: #928374;
+      --accent: #fabd2f;
+      --shadow: rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #f9f5e3; --plate: #d5c4a1; --plate-edge: #bdae93; --cap: #fbf1c7;
+    --cap-edge: #d5c4a1; --cap-skirt: #b8a888; --ink: #3c3836; --ink-dim: #7c6f64;
+    --line: #d5c4a1; --mod: #d65d0e; --layer: #427b58; --nav: #076678;
+    --trns: #a89984; --accent: #af3a03; --shadow: rgba(60,56,54,.18);
+  }
+  :root[data-theme="dark"] {
+    --bg: #1d2021; --plate: #32302f; --plate-edge: #1d2021; --cap: #504945;
+    --cap-edge: #3c3836; --cap-skirt: #282828; --ink: #ebdbb2; --ink-dim: #a89984;
+    --line: #3c3836; --mod: #fe8019; --layer: #8ec07c; --nav: #83a598;
+    --trns: #928374; --accent: #fabd2f; --shadow: rgba(0,0,0,.4);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 3vw, 2rem) 4rem;
+  }
+
+  header { margin-bottom: 2.5rem; }
+  .eyebrow {
+    font-family: var(--font-legend);
+    font-size: .72rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 .6rem;
+  }
+  h1 {
+    font-family: var(--font-legend);
+    font-size: clamp(2.1rem, 6vw, 3.4rem);
+    font-weight: 700;
+    letter-spacing: -.01em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  h1 .fish { color: var(--mod); }
+  .meta {
+    margin-top: .9rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem .75rem;
+    font-family: var(--font-legend);
+    font-size: .78rem;
+    color: var(--ink-dim);
+  }
+  .meta span { display: inline-flex; align-items: center; gap: .4rem; }
+  .meta span::before {
+    content: "";
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--line);
+  }
+  .meta span:first-child::before { display: none; }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1.4rem;
+    padding: .9rem 1.1rem;
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font-family: var(--font-legend);
+    font-size: .76rem;
+  }
+  .legend b { display: inline-flex; align-items: center; gap: .5rem; font-weight: 500; color: var(--ink-dim); }
+  .swatch { width: 13px; height: 13px; border-radius: 3px; flex: none; }
+
+  section { margin-bottom: 3rem; }
+  .layer-head {
+    display: flex;
+    align-items: baseline;
+    gap: .9rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: .6rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .layer-num {
+    font-family: var(--font-legend);
+    font-weight: 700;
+    font-size: 1.15rem;
+  }
+  .layer-name { font-size: .95rem; color: var(--ink-dim); }
+  .layer-how {
+    margin-left: auto;
+    font-family: var(--font-legend);
+    font-size: .74rem;
+    color: var(--ink-dim);
+  }
+
+  .board {
+    background: var(--plate);
+    border: 1px solid var(--plate-edge);
+    border-radius: 16px;
+    padding: clamp(.8rem, 2.5vw, 1.6rem);
+    box-shadow: 0 1px 0 var(--plate-edge) inset, 0 8px 24px -12px var(--shadow);
+    overflow-x: auto;
+  }
+  .halves {
+    display: flex;
+    gap: clamp(1.2rem, 5vw, 3rem);
+    justify-content: center;
+    min-width: min-content;
+  }
+  .half { display: flex; flex-direction: column; align-items: center; gap: .55rem; }
+  .rows { display: flex; gap: 6px; }
+  .col { display: flex; flex-direction: column; gap: 6px; }
+  .thumbs { display: flex; gap: 6px; }
+  .half.left .thumbs { align-self: flex-end; }
+  .half.right .thumbs { align-self: flex-start; }
+
+  .key {
+    position: relative;
+    width: 46px; height: 46px;
+    background: var(--cap);
+    border-radius: 6px;
+    border: 1px solid var(--cap-edge);
+    box-shadow: 0 2px 0 var(--cap-skirt), 0 3px 4px -2px var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-legend);
+    font-size: .82rem;
+    color: var(--ink);
+    text-align: center;
+    padding: 2px;
+    transition: transform .08s ease, box-shadow .08s ease;
+  }
+  .key.wide { width: 62px; }
+  .key .lg { line-height: 1.05; }
+  .key .sub {
+    font-size: .5rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-top: 1px;
+  }
+  .key.blank {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  /* home-row mods */
+  .key.mod {
+    border-color: color-mix(in srgb, var(--mod) 55%, var(--cap-edge));
+    box-shadow: 0 2px 0 var(--cap-skirt), 0 3px 4px -2px var(--shadow), 0 0 0 1px color-mix(in srgb, var(--mod) 30%, transparent) inset;
+  }
+  .key.mod .tap { font-size: .95rem; font-weight: 600; }
+  .key.mod .hold {
+    font-size: .58rem;
+    color: var(--mod);
+    font-weight: 700;
+    margin-top: 1px;
+  }
+
+  /* layer toggles */
+  .key.layer {
+    background: color-mix(in srgb, var(--layer) 18%, var(--cap));
+    border-color: color-mix(in srgb, var(--layer) 60%, var(--cap-edge));
+    color: color-mix(in srgb, var(--layer) 75%, var(--ink));
+    font-weight: 700;
+  }
+  .key.layer .sub { color: color-mix(in srgb, var(--layer) 60%, var(--ink-dim)); }
+
+  /* nav / arrows */
+  .key.nav .lg { color: var(--nav); font-weight: 700; font-size: 1.05rem; }
+
+  /* transparent */
+  .key.trns {
+    background: color-mix(in srgb, var(--cap) 60%, var(--plate));
+    border-style: dashed;
+    box-shadow: none;
+  }
+  .key.trns .lg { color: var(--trns); font-size: 1rem; }
+  .key.trns .ghost {
+    font-size: .52rem;
+    color: var(--trns);
+    opacity: .85;
+    margin-top: 1px;
+  }
+  .key.fn .lg { color: var(--ink-dim); }
+
+  @media (hover: hover) {
+    .key:not(.blank):hover { transform: translateY(-2px); box-shadow: 0 4px 0 var(--cap-skirt), 0 6px 8px -3px var(--shadow); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .key { transition: none; }
+    .key:hover { transform: none; }
+  }
+
+  .notes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+  }
+  .card h3 {
+    margin: 0 0 .7rem;
+    font-family: var(--font-legend);
+    font-size: .8rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .card table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+  .card td { padding: .22rem 0; vertical-align: top; }
+  .card td:first-child {
+    font-family: var(--font-legend);
+    color: var(--ink);
+    padding-right: .9rem;
+    white-space: nowrap;
+  }
+  .card td:last-child { color: var(--ink-dim); }
+  .kbd {
+    font-family: var(--font-legend);
+    background: var(--plate);
+    border: 1px solid var(--plate-edge);
+    border-radius: 4px;
+    padding: .05em .4em;
+    font-size: .9em;
+  }
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-legend);
+    font-size: .72rem;
+    color: var(--ink-dim);
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">split ergo · qmk / vial keymap</p>
+    <h1><span class="fish">silakka</span>54</h1>
+    <div class="meta">
+      <span>54 keys · 5×6 + 3 thumbs per half</span>
+      <span>2 active layers</span>
+      <span>home-row mods · GACS</span>
+      <span>Vial protocol 6</span>
+    </div>
+  </header>
+
+  <div class="legend" id="legend"></div>
+
+  <div id="layers"></div>
+
+  <section>
+    <div class="layer-head"><span class="layer-num">Extras</span><span class="layer-name">defined but noteworthy</span></div>
+    <div class="notes">
+      <div class="card">
+        <h3>Home-row mods (GACS)</h3>
+        <table>
+          <tr><td>A / ;</td><td>hold = <b>GUI</b> (Super)</td></tr>
+          <tr><td>S / L</td><td>hold = <b>Alt</b></td></tr>
+          <tr><td>D / K</td><td>hold = <b>Ctrl</b></td></tr>
+          <tr><td>F / J</td><td>hold = <b>Shift</b></td></tr>
+          <tr><td colspan="2" style="color:var(--ink-dim);padding-top:.5rem">Tap = the letter · hold = the modifier. Mirrored both hands.</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Layer 1 access</h3>
+        <table>
+          <tr><td><span class="kbd">MO1</span></td><td>momentary — hold for layer 1</td></tr>
+          <tr><td><span class="kbd">TG1</span></td><td>toggle — tap to lock layer 1 on/off</td></tr>
+          <tr><td colspan="2" style="color:var(--ink-dim);padding-top:.5rem">Both live on the inner thumb keys, both halves.</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Defined, not placed</h3>
+        <table>
+          <tr><td>Macro M0</td><td>Shift+Insert (paste) — not bound to a key</td></tr>
+          <tr><td>Tap-dance 0</td><td>MO0 / MO1 / TG1 — not bound to a key</td></tr>
+          <tr><td colspan="2" style="color:var(--ink-dim);padding-top:.5rem">No combos, key-overrides, or encoders.</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>The ▽ trap</h3>
+        <table>
+          <tr><td colspan="2">On layer 1, ▽ = transparent: the key falls through to layer 0. That's why the right home row on L1 still types <span class="kbd">; L K J</span> etc. Small ghost legend shows what each ▽ sends.</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer>silakka54 · exported from Vial (uid 5751176265195704471) · legends assume US keymap on the host</footer>
+</div>
+
+<script>
+  const LEG = {
+    KC_ESCAPE:"Esc", KC_TAB:"Tab", KC_EQUAL:"=", KC_GRAVE:"`", KC_BSPACE:"⌫",
+    KC_ENTER:"⏎", KC_SPACE:"Space", KC_LBRACKET:"[", KC_RBRACKET:"]",
+    KC_QUOTE:"'", KC_MINUS:"-", KC_SLASH:"/", KC_DOT:".", KC_COMMA:",",
+    KC_SCOLON:";", KC_BSLASH:"\\", KC_DELETE:"Del", KC_HOME:"Home", KC_END:"End",
+    KC_PGUP:"PgUp", KC_PGDOWN:"PgDn", KC_LEFT:"←", KC_RIGHT:"→", KC_UP:"↑", KC_DOWN:"↓",
+    KC_TRNS:"▽", KC_NO:""
+  };
+  const MODSYM = { GUI:"⌘", ALT:"⌥", CTL:"⌃", SFT:"⇧" };
+  const NAVCODES = new Set(["KC_LEFT","KC_RIGHT","KC_UP","KC_DOWN","KC_HOME","KC_END","KC_PGUP","KC_PGDOWN","KC_DELETE"]);
+
+  function legendOf(code) {
+    if (LEG[code] !== undefined) return LEG[code];
+    let m = code.match(/^KC_([A-Z])$/); if (m) return m[1];
+    m = code.match(/^KC_(\d)$/); if (m) return m[1];
+    m = code.match(/^KC_(F\d{1,2})$/); if (m) return m[1];
+    return code.replace("KC_","");
+  }
+
+  // returns {html, cat}
+  function renderKey(code, ghostCode) {
+    if (code === "KC_NO") return { html:'<div class="key blank"></div>' };
+    let m = code.match(/^([LR])(GUI|ALT|CTL|SFT)_T\(KC_(\w+)\)$/);
+    if (m) {
+      const tap = legendOf("KC_" + m[3]);
+      return { html:`<div class="key mod"><span class="tap">${tap}</span><span class="hold">${MODSYM[m[2]]}</span></div>` };
+    }
+    m = code.match(/^MO\((\d)\)$/);
+    if (m) return { html:`<div class="key layer"><span class="lg">MO${m[1]}</span><span class="sub">hold</span></div>` };
+    m = code.match(/^TG\((\d)\)$/);
+    if (m) return { html:`<div class="key layer"><span class="lg">TG${m[1]}</span><span class="sub">toggle</span></div>` };
+
+    if (code === "KC_TRNS") {
+      const g = ghostCode ? legendOf(ghostCode) : "";
+      const gh = g ? `<span class="ghost">${g}</span>` : "";
+      return { html:`<div class="key trns"><span class="lg">▽</span>${gh}</div>` };
+    }
+    const lg = legendOf(code);
+    let cls = "key";
+    if (NAVCODES.has(code)) cls += " nav";
+    else if (/^KC_F\d{1,2}$/.test(code)) cls += " fn";
+    const wide = (code === "KC_SPACE" || code === "KC_ENTER" || code === "KC_BSPACE") ? " wide" : "";
+    return { html:`<div class="${cls}${wide}"><span class="lg">${lg}</span></div>` };
+  }
+
+  // physical, left-to-right. right rows already un-mirrored from matrix.
+  const L0 = {
+    left: [
+      ["KC_ESCAPE","KC_1","KC_2","KC_3","KC_4","KC_5"],
+      ["KC_TAB","KC_Q","KC_W","KC_E","KC_R","KC_T"],
+      ["KC_EQUAL","LGUI_T(KC_A)","LALT_T(KC_S)","LCTL_T(KC_D)","LSFT_T(KC_F)","KC_G"],
+      ["KC_GRAVE","KC_Z","KC_X","KC_C","KC_V","KC_B"]
+    ],
+    right: [
+      ["KC_6","KC_7","KC_8","KC_9","KC_0","KC_BSPACE"],
+      ["KC_Y","KC_U","KC_I","KC_O","KC_P","KC_LBRACKET"],
+      ["KC_H","RSFT_T(KC_J)","RCTL_T(KC_K)","RALT_T(KC_L)","RGUI_T(KC_SCOLON)","KC_QUOTE"],
+      ["KC_N","KC_M","KC_COMMA","KC_DOT","KC_SLASH","KC_MINUS"]
+    ],
+    lthumb: ["TG(1)","MO(1)","KC_SPACE"],
+    rthumb: ["KC_ENTER","MO(1)","TG(1)"]
+  };
+  const L1 = {
+    left: [
+      ["KC_TRNS","KC_F1","KC_F2","KC_F3","KC_F4","KC_F5"],
+      ["KC_TRNS","KC_TRNS","KC_TRNS","KC_TRNS","KC_TRNS","KC_TRNS"],
+      ["KC_TRNS","KC_LEFT","KC_DOWN","KC_UP","KC_RIGHT","KC_LEFT"],
+      ["KC_TRNS","KC_TRNS","KC_TRNS","KC_TRNS","KC_TRNS","KC_TRNS"]
+    ],
+    right: [
+      ["KC_F6","KC_F7","KC_F8","KC_F9","KC_F10","KC_F12"],
+      ["KC_PGUP","KC_PGDOWN","KC_HOME","KC_END","KC_DELETE","KC_RBRACKET"],
+      ["KC_LEFT","KC_DOWN","KC_UP","KC_RIGHT","KC_TRNS","KC_BSLASH"],
+      ["KC_TRNS","KC_TRNS","KC_TRNS","KC_TRNS","KC_TRNS","KC_TRNS"]
+    ],
+    lthumb: ["KC_TRNS","KC_TRNS","KC_PGUP"],
+    rthumb: ["KC_PGDOWN","KC_TRNS","KC_TRNS"]
+  };
+
+  // column stagger (px), outer→inner for left half; mirrored for right
+  const STAG_L = [10, -4, -13, -17, -7, 1];
+  const STAG_R = [...STAG_L].reverse();
+
+  function half(sideClass, rows, thumbs, ghostRows, ghostThumbs, stag) {
+    const cols = rows[0].map((_, c) => {
+      const keys = rows.map((row, r) => {
+        const g = ghostRows ? ghostRows[r][c] : null;
+        return renderKey(row[c], g).html;
+      }).join("");
+      return `<div class="col" style="transform:translateY(${stag[c]}px)">${keys}</div>`;
+    }).join("");
+    const th = thumbs.map((code, i) => renderKey(code, ghostThumbs ? ghostThumbs[i] : null).html).join("");
+    return `<div class="half ${sideClass}"><div class="rows">${cols}</div><div class="thumbs">${th}</div></div>`;
+  }
+
+  function board(layer, ghost) {
+    return `<div class="board"><div class="halves">
+      ${half("left",  layer.left,  layer.lthumb, ghost&&ghost.left,  ghost&&ghost.lthumb, STAG_L)}
+      ${half("right", layer.right, layer.rthumb, ghost&&ghost.right, ghost&&ghost.rthumb, STAG_R)}
+    </div></div>`;
+  }
+
+  const layers = [
+    { n:0, name:"base — QWERTY + home-row mods", how:"default", data:L0, ghost:null },
+    { n:1, name:"nav & function", how:"hold MO1 · or toggle TG1", data:L1, ghost:L0 }
+  ];
+  document.getElementById("layers").innerHTML = layers.map(L => `
+    <section>
+      <div class="layer-head">
+        <span class="layer-num">Layer ${L.n}</span>
+        <span class="layer-name">${L.name}</span>
+        <span class="layer-how">${L.how}</span>
+      </div>
+      ${board(L.data, L.ghost)}
+    </section>`).join("");
+
+  const legendItems = [
+    ["var(--mod)","home-row mod (tap/hold)"],
+    ["var(--layer)","layer toggle"],
+    ["var(--nav)","arrows / navigation"],
+    ["var(--trns)","▽ transparent → falls through"]
+  ];
+  document.getElementById("legend").innerHTML = legendItems
+    .map(([c,t]) => `<b><span class="swatch" style="background:${c}"></span>${t}</b>`).join("");
+</script>
