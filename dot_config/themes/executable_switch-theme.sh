@@ -10,41 +10,6 @@ apply_theme() {
     # Save current theme
     echo "$theme" > "$CURRENT_THEME_FILE"
 
-    # Update Polybar
-    cat > "$HOME/.config/polybar/colors.ini" << EOF
-[colors]
-background = $BG
-foreground = $FG
-primary = $GREEN
-secondary = $AQUA
-alert = $RED
-EOF
-
-    # Update i3
-    cat > "$HOME/.config/i3/colors" << EOF
-# Gruvbox $theme
-set \$bg $BG
-set \$bg1 $BG1
-set \$bg2 $BG2
-set \$fg $FG
-set \$red $RED
-set \$green $GREEN
-set \$yellow $YELLOW
-set \$blue $BLUE
-set \$purple $PURPLE
-set \$aqua $AQUA
-set \$grey $GREY
-
-# class                 border  backgr  text    indicator child_border
-client.focused          \$green \$bg1    \$fg    \$aqua    \$green
-client.focused_inactive \$bg2   \$bg1    \$grey  \$bg2     \$bg2
-client.unfocused        \$bg1   \$bg     \$grey  \$bg1     \$bg1
-client.urgent           \$red   \$red    \$bg    \$red     \$red
-EOF
-
-    # Update Rofi
-    sed -i 's/@theme "gruvbox-[^"]*"/@theme "gruvbox-'"$theme"'"/' "$HOME/.config/rofi/config.rasi"
-
     # Update Wezterm
     if [ "$theme" = "dark" ]; then
         WEZTERM_SCHEME="Gruvbox Dark (Gogh)"
@@ -328,10 +293,6 @@ EOF
         nvim --server "$sock" --remote-expr "execute('set background=$theme')" 2>/dev/null
     done
 
-    # Reload i3 and relaunch polybar
-    i3-msg reload &>/dev/null
-    setsid "$HOME/.config/polybar/launch.sh" &>/dev/null &
-
     notify-send "Theme Switched" "Gruvbox $theme applied" 2>/dev/null
 }
 
@@ -341,8 +302,12 @@ if [ -n "$1" ]; then
     exit 0
 fi
 
-# Show Rofi menu
-chosen=$(printf "Dark\nLight" | rofi -dmenu -p "Theme" -theme-str 'window {width: 200px;}')
+# Interactive picker — fzf if available, otherwise plain select
+if command -v fzf &>/dev/null; then
+    chosen=$(printf "Dark\nLight" | fzf --prompt="Theme: ")
+else
+    select chosen in Dark Light; do break; done
+fi
 
 case "$chosen" in
     "Dark") apply_theme "dark" ;;

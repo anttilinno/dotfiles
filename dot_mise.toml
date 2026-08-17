@@ -11,21 +11,7 @@ CONFIG_FILE="${CONFIG_DIR}/chezmoi.toml"
 echo "=== Chezmoi Setup ==="
 echo
 
-# Session type
-echo "Session type:"
-echo "  1) wayland (niri)"
-echo "  2) x11 (i3)"
-echo "  3) kodi"
-read -rp "Choose [1]: " session_choice
-case "${session_choice:-1}" in
-  1) session="wayland" ;;
-  2) session="x11" ;;
-  3) session="kodi" ;;
-  *) echo "Invalid choice"; exit 1 ;;
-esac
-
-# Role (i3 profile)
-echo
+# Role
 echo "Role:"
 echo "  1) desktop"
 echo "  2) kodi"
@@ -44,7 +30,6 @@ cat > "${CONFIG_FILE}" <<EOF
 sourceDir = "${REPO_DIR}"
 
 [data]
-  session = "${session}"
   role = "${role}"
 EOF
 

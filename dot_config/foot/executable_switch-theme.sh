@@ -71,12 +71,9 @@ case "${1:-}" in
         current_theme
         ;;
     "")
-        # Interactive picker — rofi if available, otherwise fzf, otherwise plain select
+        # Interactive picker — fzf if available, otherwise plain select
         themes=$(list_themes)
-        if command -v rofi &>/dev/null; then
-            chosen=$(echo "$themes" | rofi -dmenu -p "Foot theme" \
-                -theme-str 'window {width: 280px;}')
-        elif command -v fzf &>/dev/null; then
+        if command -v fzf &>/dev/null; then
             chosen=$(echo "$themes" | fzf --prompt="Foot theme: ")
         else
             echo "Available themes:"
