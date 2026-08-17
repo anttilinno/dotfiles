@@ -1,6 +1,9 @@
 [user]
 	email = antti@begin.ee
 	name = Antti
+# Personal repos live under ~/Repos/Misc — override the work default there
+[includeIf "gitdir:~/Repos/Misc/"]
+	path = ~/.gitconfig-personal
 [credential "https://github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential

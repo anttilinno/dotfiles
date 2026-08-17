@@ -1,0 +1,20 @@
+                    tmux cheat sheet   (prefix = Ctrl-b)
+
+  PREFIX + …
+    F1            this cheat sheet          p / P     floax float / menu
+    |   -         split right / down        r         reload config
+    c             new window (tab)          ,         rename window
+    &             kill window               x         kill pane
+    z             zoom pane toggle          d         detach session
+    space         next pane layout          w         window picker
+    [             copy mode (q to quit)     ]         paste
+    s             session picker            :         command prompt
+    ← ↑ ↓ →       select pane               < >       (none)
+
+  NO PREFIX
+    scroll / click / drag                   mouse: select, resize, scroll
+
+  COPY MODE (vi)  after prefix [
+    v  begin select    y  copy    q  quit
+
+                     scroll: ↑↓ / j k    close: q
