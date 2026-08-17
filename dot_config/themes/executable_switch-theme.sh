@@ -10,18 +10,6 @@ apply_theme() {
     # Save current theme
     echo "$theme" > "$CURRENT_THEME_FILE"
 
-    # Update Wezterm
-    if [ "$theme" = "dark" ]; then
-        WEZTERM_SCHEME="Gruvbox Dark (Gogh)"
-    else
-        WEZTERM_SCHEME="Gruvbox Light"
-    fi
-
-    cat > "$HOME/.config/wezterm/colors.lua" << EOF
-return "$WEZTERM_SCHEME"
-EOF
-    touch "$HOME/.config/wezterm/wezterm.lua"
-
     # Update GTK
     mkdir -p "$HOME/.config/gtk-3.0"
     cat > "$HOME/.config/gtk-3.0/settings.ini" << EOF
