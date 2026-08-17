@@ -1,0 +1,17 @@
+#!/bin/bash
+# Notify only when Claude's foot window is NOT focused in niri.
+
+focused_pid=$(niri msg --json focused-window 2>/dev/null | jq -r '.pid // empty')
+
+if [ -n "$focused_pid" ]; then
+    pid=$PPID
+    while [ -n "$pid" ] && [ "$pid" != "1" ] && [ "$pid" != "0" ]; do
+        if [ "$pid" = "$focused_pid" ]; then
+            exit 0
+        fi
+        pid=$(ps -o ppid= -p "$pid" 2>/dev/null | tr -d ' ')
+    done
+fi
+
+paplay "$HOME/.local/share/sounds/damn-i-m-good.wav" >/dev/null 2>&1 &
+notify-send -a "Claude Code" -i utilities-terminal "Claude Code" "Waiting for input"
