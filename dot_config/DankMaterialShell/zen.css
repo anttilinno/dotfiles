@@ -9,6 +9,17 @@
   --arrowpanel-background: #f4e8be !important;
   --sidebar-text-color: #4f3829 !important;
   --zen-main-browser-background: #fbf1c7 !important;
+  --zen-main-browser-background-toolbar: #fbf1c7 !important;
+}
+
+#zen-browser-background {
+  --zen-main-browser-background: #fbf1c7 !important;
+  --zen-background-opacity: 1 !important;
+}
+
+#zen-toolbar-background {
+  --zen-main-browser-background-toolbar: #fbf1c7 !important;
+  --zen-background-opacity: 1 !important;
 }
 
 .sidebar-placesTree {
@@ -75,8 +86,8 @@ toolbar .toolbarbutton-1 {
 }
 
 .identity-color-red {
-  --identity-tab-color: #b05b4c !important;
-  --identity-icon-color: #b05b4c !important;
+  --identity-tab-color: #af5a4b !important;
+  --identity-icon-color: #af5a4b !important;
 }
 
 .identity-color-pink {
