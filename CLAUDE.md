@@ -40,6 +40,9 @@ from the repo.
 
 ## Notes
 
-- `wpaperd/wallpaper.png` is tracked (wpaperd points at it via `wpaperd/config.toml`)
+- `wpaperd/wallpaper.png` is tracked, but **DankMaterialShell** is what sets it, not wpaperd.
+  DMS stores the path in `~/.local/state/DankMaterialShell/session.json`; change it with
+  `dms ipc call wallpaper set <path>`. wpaperd is installed but never started (niri's
+  `spawn-at-startup "wpaperd"` is commented out), so `wpaperd/config.toml` is vestigial.
 - `goto` and `todo-calendar` binaries are installed by mise (`.config/mise/config.toml`), not by a chezmoi `run_once` script
 - **Huion KD100 keydial**: daemon lives in separate repo (raw HID → uinput); keycodes documented in `~/Repos/Misc/home-cluster/docs/huion-kd100.md`. Here we track only the `huion-kd100d.service` user unit + `~/.config/huion-kd100d/keymap.conf`. Needs the `input` group + the daemon's udev rule installed; binary via `go install`.
