@@ -3,10 +3,10 @@
   "currentThemeCategory": "registry",
   "customThemeFile": "/home/antti/.config/DankMaterialShell/themes/gruvboxMulti/theme.json",
   "cornerRadius": 12,
-  "barElevationEnabled": false,
   "controlCenterShowMicPercent": true,
   "appIdSubstitutions": [],
   "useAutoLocation": true,
+  "networkPreference": "wifi",
   "cursorSettings": {
     "theme": "Adwaita",
     "size": 24,

@@ -16,3 +16,9 @@
   Output = ""
   Tag = ["ssh", "db"]
   command = "ssh -fN -L 25432:begin-db-dev.chjbzefkxgyy.eu-central-1.rds.amazonaws.com:5432 dev"
+
+[[Snippets]]
+  Description = "prod-clone"
+  Output = ""
+  Tag = ["ssh", "db"]
+  command = "ssh -fN -L 25432:begin-db-clone-20260706.ctzrsmknrr5i.eu-central-1.rds.amazonaws.com:5432 ec2-user@52.58.253.215"

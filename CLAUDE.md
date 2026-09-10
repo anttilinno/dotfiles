@@ -33,7 +33,13 @@ and `~/.agents` are symlinked out of the private `shared-datafiles` repo
 (`~/Repos/Misc/shared-datafiles`, installed by its `install.sh`) — they contain
 work-internal material that does not belong in a public repo.
 
+`install.sh` **skips any target that already exists as a real file** (it only
+replaces symlinks). On a machine where Claude Code wrote those paths first, move
+them aside before running it, or the config silently stays local and drifts away
+from the repo.
+
 ## Notes
 
 - `wpaperd/wallpaper.png` is tracked (wpaperd points at it via `wpaperd/config.toml`)
+- `goto` and `todo-calendar` binaries are installed by mise (`.config/mise/config.toml`), not by a chezmoi `run_once` script
 - **Huion KD100 keydial**: daemon lives in separate repo (raw HID → uinput); keycodes documented in `~/Repos/Misc/home-cluster/docs/huion-kd100.md`. Here we track only the `huion-kd100d.service` user unit + `~/.config/huion-kd100d/keymap.conf`. Needs the `input` group + the daemon's udev rule installed; binary via `go install`.
