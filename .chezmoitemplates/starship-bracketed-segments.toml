@@ -123,8 +123,6 @@ format = '\[[$symbol$branch]($style)\]'
 [hostname]
 format = '\[[$ssh_symbol($hostname)]($style)\] '
 ssh_only = false
-# Colored per machine so south and north are not mixed up.
-style = '{{ if eq .chezmoi.hostname "north" }}bold yellow{{ else }}bold green{{ end }}'
 
 [java]
 format = '\[[$symbol($version)]($style)\]'

@@ -1,5 +1,7 @@
 {{- if eq .role "retro-laptop" -}}
 {{ template "starship-retro-laptop.toml" . }}
-{{- else -}}
+{{- else if eq .chezmoi.hostname "north" -}}
 {{ template "starship-bracketed-segments.toml" . }}
+{{- else -}}
+{{ template "starship-gruvbox-rainbow.toml" . }}
 {{- end -}}
