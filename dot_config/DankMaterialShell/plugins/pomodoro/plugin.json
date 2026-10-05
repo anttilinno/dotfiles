@@ -1,0 +1,11 @@
+{
+    "id": "pomodoro",
+    "name": "Pomodoro",
+    "description": "Pomodoro timer: click to start/pause, right-click to reset. Shows a flashing countdown overlay on the second monitor.",
+    "version": "1.0.0",
+    "author": "antti",
+    "type": "widget",
+    "capabilities": ["dankbar-widget"],
+    "component": "./PomodoroWidget.qml",
+    "icon": "timer"
+}

@@ -122,6 +122,7 @@
           "id": "battery",
           "enabled": false
         },
+        "pomodoro",
         "todoIndicator",
         {
           "id": "controlCenterButton",

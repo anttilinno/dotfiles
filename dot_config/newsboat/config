@@ -1,0 +1,28 @@
+# Firehose: reload in the background, cap per-feed history
+auto-reload yes
+reload-time 30
+reload-threads 8
+max-items 300
+keep-articles-days 14
+show-read-feeds no
+prepopulate-query-feeds yes
+
+# Reddit rate-limits the default user agent
+user-agent "Mozilla/5.0 (X11; Linux x86_64) newsboat"
+
+browser "xdg-open %u >/dev/null 2>&1 &"
+
+# vim keys
+bind-key j down
+bind-key k up
+bind-key J next-feed articlelist
+bind-key K prev-feed articlelist
+bind-key g home
+bind-key G end
+bind-key ^D pagedown
+bind-key ^U pageup
+bind-key l open
+bind-key h quit
+
+# Drop cached feeds no longer in urls
+cleanup-on-quit yes

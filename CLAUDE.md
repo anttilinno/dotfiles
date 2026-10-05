@@ -12,9 +12,9 @@ Managed with [chezmoi](https://www.chezmoi.io/). Source dir: `~/.local/share/che
 
 - **Shell**: zshrc, zprofile, starship prompt
 - **WM/Desktop**: niri, wpaperd, themes (gruvbox light/dark switcher)
-- **Bar/Shell**: DankMaterialShell (`DankMaterialShell/` — settings, plugins, themes, zen.css; bar runs via `dms.service` for niri). State files `.changelog-*`/`.firstlaunch` not tracked. Custom `plugins/todoIndicator` shows green/red from `todo-calendar --status`.
+- **Bar/Shell**: DankMaterialShell (`DankMaterialShell/` — settings, plugins, themes, zen.css; bar runs via `dms.service` for niri). State files `.changelog-*`/`.firstlaunch` not tracked. Custom `plugins/todoIndicator` shows green/red from `todo-calendar --status`. Custom `plugins/pomodoro` is a break timer on fixed clock slots during working hours (manual timer outside them), with a countdown overlay on the second monitor; logic in `pomodoro.js`, checked by `node test.mjs`.
 - **Terminal**: foot
-- **Tools**: btop, gh, goto, todo-calendar
+- **Tools**: btop, gh, goto, todo-calendar, newsboat (`urls`, plus `excerpt.py` — a filter that prepends an article excerpt to link-only feeds like HN/Lobsters)
 - **Git**: gitconfig
 - **Claude Code**: `claude-alert` plays a sound + notification when Claude wants input and its terminal isn't focused; sounds live in `~/.local/share/sounds/`.
   The statusline script (`~/.local/share/claude-statusline/statusline.sh`) is tracked here too — `settings.json` in `shared-datafiles` points its `statusLine.command` at that path.

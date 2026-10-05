@@ -1,5 +1,9 @@
 {
     "todoIndicator": {
         "enabled": true
+    },
+    "pomodoro": {
+        "enabled": true,
+        "workMinutes": 55
     }
 }

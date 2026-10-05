@@ -1,0 +1,46 @@
+# Tags after the URL; "~Name" overrides the display title.
+
+# Tech / dev
+"filter:/home/antti/.config/newsboat/excerpt.py:https://hnrss.org/frontpage"                                tech "~HN Front Page"
+"filter:/home/antti/.config/newsboat/excerpt.py:https://hnrss.org/show?points=50"                           tech cli "~Show HN (50+)"
+"filter:/home/antti/.config/newsboat/excerpt.py:https://lobste.rs/rss"                                      tech "~Lobsters"
+https://feeds.arstechnica.com/arstechnica/index            tech "~Ars Technica"
+https://jvns.ca/atom.xml                                   tech cli "~Julia Evans"
+
+# Linux / Arch
+https://archlinux.org/feeds/news/                          arch "~Arch News"
+https://security.archlinux.org/advisory/feed.atom          arch "~Arch Security"
+https://lwn.net/headlines/rss                              linux "~LWN"
+https://www.phoronix.com/rss.php                           linux "~Phoronix"
+https://www.reddit.com/r/archlinux/.rss                    arch reddit "~r/archlinux"
+https://www.reddit.com/r/linux/.rss                        linux reddit "~r/linux"
+
+# DevOps
+https://kubernetes.io/feed.xml                             devops "~Kubernetes Blog"
+https://www.cncf.io/feed/                                  devops "~CNCF"
+https://www.lastweekinaws.com/feed/                        devops "~Last Week in AWS"
+https://aws.amazon.com/about-aws/whats-new/recent/feed/    devops "~AWS What's New"
+https://www.reddit.com/r/kubernetes/.rss                   devops reddit "~r/kubernetes"
+https://www.reddit.com/r/devops/.rss                       devops reddit "~r/devops"
+
+# Self-hosting
+https://selfh.st/rss/                                      selfhosted "~selfh.st"
+https://www.reddit.com/r/selfhosted/.rss                   selfhosted reddit "~r/selfhosted"
+https://www.reddit.com/r/homelab/.rss                      selfhosted reddit "~r/homelab"
+
+# Local AI
+https://simonwillison.net/atom/everything/                 ai "~Simon Willison"
+https://huggingface.co/blog/feed.xml                       ai "~Hugging Face Blog"
+https://github.com/ollama/ollama/releases.atom             ai release "~Ollama releases"
+https://www.reddit.com/r/LocalLLaMA/.rss                   ai reddit "~r/LocalLLaMA"
+
+# CLI / TUI
+https://www.reddit.com/r/commandline/.rss                  cli reddit "~r/commandline"
+https://www.reddit.com/r/neovim/.rss                       cli reddit "~r/neovim"
+https://github.com/newsboat/newsboat/releases.atom         cli release "~Newsboat releases"
+https://github.com/sxyazi/yazi/releases.atom               cli release "~Yazi releases"
+https://github.com/niri-wm/niri/releases.atom               cli release "~niri releases"
+
+# Query feeds: cross-cutting unread views
+"query:Unread Arch:tags # \"arch\" and unread = \"yes\""
+"query:Unread Releases:tags # \"release\" and unread = \"yes\""
