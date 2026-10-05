@@ -27,7 +27,7 @@ Managed with [chezmoi](https://www.chezmoi.io/). Source dir: `~/.local/share/che
 
 ## Excluded (secrets/state)
 
-`gh/hosts.yml`, `goto/aliases.toml`, `goto/*_cache.json`
+`gh/hosts.yml`, `goto/aliases.toml`, `goto/*_cache.json`, `pet/` (snippets hold internal hostnames)
 
 ## Claude Code config lives elsewhere
 
