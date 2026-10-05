@@ -9,8 +9,8 @@
 input {
     keyboard {
         xkb {
-            layout "us,ee"
-            options "grp:alt_shift_toggle"
+            layout "ee"
+            variant "us"
         }
 
         // Enable numlock on startup, omitting this setting disables it.
