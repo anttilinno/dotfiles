@@ -1,0 +1,54 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# History
+HISTSIZE=10000
+HISTFILESIZE=10000
+HISTCONTROL=ignoreboth:erasedups
+shopt -s histappend
+
+# Path and env (mirrors .zshrc/.zprofile)
+export PATH="$HOME/.local/bin:$PATH"
+export XCURSOR_SIZE=16
+export SUDO_ASKPASS=/usr/lib/ssh/ssh-askpass
+export EDITOR=nvim
+
+# Secrets (managed via shared-datafiles)
+[ -f ~/.secrets ] && source ~/.secrets
+
+# Aliases
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias n="nvim"
+alias j="goto"
+alias cz="chezmoi"
+alias czp="chezmoi --source ~/Repos/Misc/shared-datafiles"
+alias gsd='claude --dangerously-skip-permissions'
+alias peterpecker='sudo reboot'
+alias donthurtme='sudo shutdown now'
+alias bdev-begin='systemd-run --user --scope --unit=begin-dev -p MemoryHigh=14G -p MemoryMax=18G -p MemorySwapMax=2G pnpm dev'
+
+# docker exec with auto shell detection
+dexec() {
+  if [ -z "$1" ]; then
+    echo "Usage: dexec <container>"
+    return 1
+  fi
+  if docker exec "$1" bash -c '' 2>/dev/null; then
+    docker exec -it "$1" bash
+  else
+    docker exec -it "$1" sh
+  fi
+}
+
+# goto: goto.zsh's function is bash-compatible; its completion block is not
+[ -f ~/.config/goto/goto.zsh ] && source <(sed -n '/^goto()/,/^}/p' ~/.config/goto/goto.zsh)
+
+eval "$(mise activate bash)"
+command -v wt >/dev/null 2>&1 && eval "$(command wt config shell init bash)"
+# ponytail: atuin skipped, its bash hook needs bash-preexec or ble.sh (not installed)
+
