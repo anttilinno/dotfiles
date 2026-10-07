@@ -13,7 +13,7 @@ Managed with [chezmoi](https://www.chezmoi.io/). Source dir: `~/.local/share/che
 - **Shell**: zshrc, zprofile, starship prompt
 - **WM/Desktop**: niri, wpaperd, themes (gruvbox light/dark switcher)
 - **Bar/Shell**: DankMaterialShell (`DankMaterialShell/` — settings, plugins, themes, zen.css; bar runs via `dms.service` for niri). State files `.changelog-*`/`.firstlaunch` not tracked. Custom `plugins/todoIndicator` shows green/red from `todo-calendar --status`. Custom `plugins/pomodoro` is a break timer on fixed clock slots during working hours (manual timer outside them), with a countdown overlay on the second monitor; logic in `pomodoro.js`, checked by `node test.mjs`.
-- **Terminal**: foot
+- **Terminal**: foot; herdr (`config.toml` only — sockets, logs, `session.json` are state). Herdr panes use bash (`default_shell`); plain terminals stay zsh + starship
 - **Tools**: btop, gh, goto, todo-calendar, newsboat (`urls`, plus `excerpt.py` — a filter that prepends an article excerpt to link-only feeds like HN/Lobsters)
 - **Git**: gitconfig
 - **Claude Code**: `claude-alert` plays a sound + notification when Claude wants input and its terminal isn't focused; sounds live in `~/.local/share/sounds/`.
