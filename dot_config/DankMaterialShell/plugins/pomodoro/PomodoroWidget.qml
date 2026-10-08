@@ -34,7 +34,11 @@ PluginComponent {
     readonly property string label: P.format(v.remaining)
     readonly property string icon: v.auto && !active ? "timer_off" : phase === "break" ? "coffee" : "timer"
     readonly property color accent: done ? Theme.error : warn || phase === "break" ? Theme.success : Theme.primary
-    readonly property bool ownsOverlay: parentScreen?.name === overlayScreen
+    // Connector names shift with the dock (DP-2 one day, DP-4 the next), so the
+    // setting also matches the model; nothing matching falls back to the last screen.
+    readonly property var overlayTarget: Quickshell.screens.find(s => s.name === overlayScreen || s.model === overlayScreen)
+        ?? Quickshell.screens[Quickshell.screens.length - 1]
+    readonly property bool ownsOverlay: !!parentScreen && parentScreen.name === overlayTarget?.name
 
     function load() {
         if (pluginService)
