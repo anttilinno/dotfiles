@@ -14,10 +14,11 @@ PluginComponent {
     // Settings, edited in the right-click popout. Output names from `niri msg outputs`.
     readonly property int workMin: pluginData.workMinutes ?? 25
     readonly property int breakMin: pluginData.breakMinutes ?? 5
+    readonly property int microMin: pluginData.microMinutes ?? 25
     readonly property int startHour: pluginData.startHour ?? 9
     readonly property int endHour: pluginData.endHour ?? 17
     readonly property string overlayScreen: pluginData.screen ?? "DP-2"
-    readonly property var cfg: ({ work: workMin * 60000, brk: breakMin * 60000, startHour: startHour, endHour: endHour })
+    readonly property var cfg: ({ work: workMin * 60000, brk: breakMin * 60000, micro: microMin * 60000, startHour: startHour, endHour: endHour })
 
     // The bar runs one instance per monitor; plugin state keeps them in sync
     // and survives shell restarts.
@@ -32,8 +33,8 @@ PluginComponent {
     readonly property real nextBreak: P.nextBreak(now, cfg)
     readonly property string phase: v.phase
     readonly property string label: P.format(v.remaining)
-    readonly property string icon: v.auto && !active ? "timer_off" : phase === "break" ? "coffee" : "timer"
-    readonly property color accent: done ? Theme.error : warn || phase === "break" ? Theme.success : Theme.primary
+    readonly property string icon: v.auto && !active ? "timer_off" : phase === "break" ? "coffee" : phase === "micro" ? "visibility" : "timer"
+    readonly property color accent: done ? Theme.error : warn || phase !== "work" ? Theme.success : Theme.primary
     // Connector names shift with the dock (DP-2 one day, DP-4 the next), so the
     // setting also matches the model; nothing matching falls back to the last screen.
     readonly property var overlayTarget: Quickshell.screens.find(s => s.name === overlayScreen || s.model === overlayScreen)
@@ -67,11 +68,13 @@ PluginComponent {
 
     // Only the overlay owner notifies, so there's one notification and sound, not one per bar.
     // Clips from home-cluster/config/terran-voice: "Need a light?" = pomodoro starts, "Fire it up!" = back to work.
+    // No sound: silent notification (micro breaks).
     function notify(text, sound) {
         if (!ownsOverlay)
             return
         Quickshell.execDetached(["notify-send", "-t", "20000", "-a", "Pomodoro", text])
-        Quickshell.execDetached(["paplay", Qt.resolvedUrl("sounds/" + sound + ".wav").toString().replace("file://", "")])
+        if (sound)
+            Quickshell.execDetached(["paplay", Qt.resolvedUrl("sounds/" + sound + ".wav").toString().replace("file://", "")])
     }
 
     // Always ticking: the schedule has to notice when working hours begin.
@@ -82,9 +85,14 @@ PluginComponent {
         onTriggered: {
             const prev = root.v
             root.now = Date.now()
-            if (prev.auto && root.v.auto && root.running && prev.phase !== root.phase)
-                root.phase === "break" ? root.notify("Pomodoro — take a break", "need-a-light")
-                                       : root.notify("Back to work", "fire-it-up")
+            if (!prev.auto || !root.v.auto || !root.running || prev.phase === root.phase)
+                return
+            if (root.phase === "micro")
+                root.notify("Eye break — look far away for 30 s")
+            else if (root.phase === "break")
+                root.notify("Pomodoro — take a break", "need-a-light")
+            else if (prev.phase === "break")
+                root.notify("Back to work", "fire-it-up")
         }
     }
 
@@ -153,6 +161,19 @@ PluginComponent {
                     value: root.breakMin
                     unit: " min"
                     onSliderValueChanged: v => root.setSetting("breakMinutes", v)
+                }
+
+                StyledText {
+                    text: root.microMin ? "30 s eye break every " + root.microMin + " min of work" : "Eye breaks off"
+                    color: Theme.surfaceText
+                }
+                DankSlider {
+                    width: parent.width
+                    minimum: 0
+                    maximum: 60
+                    value: root.microMin
+                    unit: " min"
+                    onSliderValueChanged: v => root.setSetting("microMinutes", v)
                 }
 
                 StyledText {

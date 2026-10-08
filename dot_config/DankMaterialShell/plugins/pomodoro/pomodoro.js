@@ -8,9 +8,14 @@
 // State, shared by all bar instances via plugin state:
 //   { phase: "work" | "break", endAt: epoch ms (0 = not running), pausedLeft: ms (0 = not paused),
 //     offDay: "Y-M-D" when the schedule was switched off for that day }
-// cfg = { work: ms, brk: ms, startHour, endHour }, from the right-click popout.
+// cfg = { work: ms, brk: ms, micro: ms (0 = off), startHour, endHour }, from the right-click popout.
+//
+// Micro breaks: every cfg.micro into a scheduled work slot, MICRO_MS of eye relief (25 min
+// work, 30 s look away, work until 55, 5 min break). Skipped when the real break is less
+// than one interval away. They sit inside the work slot, so the slots themselves don't move.
 
 var WARN_MS = 3 * 60000 // overlay blinks this long before a scheduled break starts
+var MICRO_MS = 30000
 var STALE_MS = 3600000 // ponytail: a finished manual timer nobody clicked is dropped after an hour
 
 function duration(phase, cfg) {
@@ -59,6 +64,17 @@ function nextBreak(now, cfg) {
     return 0
 }
 
+// End of the micro break running at now inside schedule slot sl, or 0.
+function microEnd(now, sl, cfg) {
+    if (!cfg.micro || sl.phase !== "work")
+        return 0
+    var pos = now - sl.start
+    var k = Math.floor(pos / cfg.micro)
+    if (k < 1 || pos - k * cfg.micro >= MICRO_MS || cfg.work - k * cfg.micro < cfg.micro)
+        return 0
+    return Math.min(sl.endAt, sl.start + k * cfg.micro + MICRO_MS)
+}
+
 function remaining(s, now, cfg) {
     if (s.endAt > 0)
         return Math.max(0, s.endAt - now)
@@ -71,10 +87,14 @@ function isDone(s, now) {
 
 // What the bar and overlay show. overlay: show the big timer on the second monitor.
 // warn: blink, a break starts within WARN_MS. done: blink, manual timer is up.
+// phase "micro": eye relief. Schedule only (ponytail: manual timer has none, add if wanted).
 function view(s, now, cfg) {
     var sl = slot(now, cfg)
     if (sl) {
         var off = s.offDay === dayKey(now)
+        var me = off ? 0 : microEnd(now, sl, cfg)
+        if (me)
+            return { auto: true, phase: "micro", remaining: me - now, running: true, active: true, overlay: true, done: false, warn: false }
         var warn = !off && sl.phase === "work" && sl.endAt === nextBreak(now, cfg) && sl.endAt - now <= WARN_MS
         return {
             auto: true, phase: sl.phase, remaining: sl.endAt - now, running: !off, active: !off,

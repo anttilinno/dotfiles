@@ -74,4 +74,16 @@ assert.ok(P.view(P.click(s, at(11, 0), day), at(11, 0), day).running) // click a
 
 // Stale manual timer left from the morning doesn't blink after hours.
 assert.ok(!P.view({ phase: "work", endAt: at(8, 55), pausedLeft: 0, offDay: "" }, at(17, 5), day).done)
+
+// Micro breaks: 55 work + 5 break, 30 s eye relief every 25 min of work, none 5 min before the break.
+const eyes = { ...day, work: 55 * 60000, micro: 25 * 60000 }
+assert.equal(P.view(P.reset(), at(9, 24, 59), eyes).phase, "work")
+v = P.view(P.reset(), at(9, 25, 10), eyes)
+assert.ok(v.phase === "micro" && v.overlay && v.remaining === 20000)
+assert.equal(P.view(P.reset(), at(9, 25, 30), eyes).phase, "work")
+assert.equal(P.view(P.reset(), at(9, 25, 30), eyes).remaining, 29.5 * 60000) // still counts to the break
+assert.equal(P.view(P.reset(), at(9, 50, 10), eyes).phase, "work") // break 5 min away: skipped
+assert.equal(P.view(P.reset(), at(10, 25, 10), eyes).phase, "micro") // next hour
+assert.ok(!P.view(P.click(P.reset(), at(9, 0), eyes), at(9, 25, 10), eyes).overlay) // off today: none
+assert.equal(P.view(P.reset(), at(9, 25, 10), { ...eyes, micro: 0 }).phase, "work") // 0 = off
 console.log("ok")
