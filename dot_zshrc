@@ -35,6 +35,9 @@ alias gsd="claude --dangerously-skip-permissions"
 alias peterpecker='sudo reboot'
 alias donthurtme='sudo shutdown now'
 alias bdev-begin='systemd-run --user --scope --unit=begin-dev -p MemoryHigh=14G -p MemoryMax=18G -p MemorySwapMax=2G pnpm dev'
+# herdr's server forks from the first client, so it stays in this scope; OOM kills stay inside it.
+# CPUQuota, not AllowedCPUs: the user manager has no cpuset delegation.
+alias herdr='systemd-run --user --scope --quiet -p MemoryHigh=24G -p MemoryMax=26G -p MemorySwapMax=2G -p CPUQuota=1500% /usr/bin/herdr'
 
 # docker exec with auto shell detection
 dexec() {
