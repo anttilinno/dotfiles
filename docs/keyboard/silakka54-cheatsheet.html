@@ -323,11 +323,12 @@
       <div class="card">
         <h3>Home-row mods (GACS)</h3>
         <table>
-          <tr><td>A / ;</td><td>hold = <b>GUI</b> (Super)</td></tr>
-          <tr><td>S / L</td><td>hold = <b>Alt</b></td></tr>
-          <tr><td>D / K</td><td>hold = <b>Ctrl</b></td></tr>
-          <tr><td>F / J</td><td>hold = <b>Shift</b></td></tr>
-          <tr><td colspan="2" style="color:var(--ink-dim);padding-top:.5rem">Tap = the letter · hold = the modifier. Mirrored both hands.</td></tr>
+          <tr><td>A / ;</td><td>hold = <b>LSuper</b> / <b>RSuper</b></td></tr>
+          <tr><td>S / L</td><td>hold = <b>LAlt</b> / <b>RAlt</b></td></tr>
+          <tr><td>D / K</td><td>hold = <b>LCtrl</b> / <b>RCtrl</b></td></tr>
+          <tr><td>F / J</td><td>hold = <b>LShift</b> / <b>RShift</b></td></tr>
+          <tr><td>G</td><td>hold = <b>RAlt</b> (AltGr)</td></tr>
+          <tr><td colspan="2" style="color:var(--ink-dim);padding-top:.5rem">Tap = the letter · hold = the modifier. Left hand sends left mods, right hand right mods. G is the exception: right Alt on the left hand.</td></tr>
         </table>
       </div>
       <div class="card">
@@ -344,6 +345,14 @@
           <tr><td>Macro M0</td><td>Shift+Insert (paste) — not bound to a key</td></tr>
           <tr><td>Tap-dance 0</td><td>MO0 / MO1 / TG1 — not bound to a key</td></tr>
           <tr><td colspan="2" style="color:var(--ink-dim);padding-top:.5rem">No combos, key-overrides, or encoders.</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Copy / paste (layer 1)</h3>
+        <table>
+          <tr><td><span class="kbd">⌃⇧C</span></td><td>Ctrl+Shift+C on the C key</td></tr>
+          <tr><td><span class="kbd">⌃⇧V</span></td><td>Ctrl+Shift+V on the V key</td></tr>
+          <tr><td colspan="2" style="color:var(--ink-dim);padding-top:.5rem">Terminal copy/paste: hold MO1, tap C or V.</td></tr>
         </table>
       </div>
       <div class="card">
@@ -367,6 +376,7 @@
     KC_PGUP:"PgUp", KC_PGDOWN:"PgDn", KC_LEFT:"←", KC_RIGHT:"→", KC_UP:"↑", KC_DOWN:"↓",
     KC_TRNS:"▽", KC_NO:""
   };
+  const CS_NAME = { C:"copy", V:"paste" };
   const MODSYM = { GUI:"Super", ALT:"Alt", CTL:"Ctrl", SFT:"Shift" };
   // US-layout shifted value of each key that has one
   const SHIFTED = {
@@ -398,8 +408,10 @@
     let m = code.match(/^([LR])(GUI|ALT|CTL|SFT)_T\(KC_(\w+)\)$/);
     if (m) {
       const tap = legendOf("KC_" + m[3]);
-      return { html:`<div class="key mod">${shiftHtml("KC_" + m[3])}<span class="tap">${tap}</span><span class="hold">${MODSYM[m[2]]}</span></div>` };
+      return { html:`<div class="key mod">${shiftHtml("KC_" + m[3])}<span class="tap">${tap}</span><span class="hold">${m[1]}${MODSYM[m[2]]}</span></div>` };
     }
+    m = code.match(/^C_S\(KC_(\w)\)$/);
+    if (m) return { html:`<div class="key"><span class="lg">⌃⇧${m[1]}</span><span class="sub">${CS_NAME[m[1]] || "ctrl+shift"}</span></div>` };
     m = code.match(/^MO\((\d)\)$/);
     if (m) return { html:`<div class="key layer"><span class="lg">MO${m[1]}</span><span class="sub">hold</span></div>` };
     m = code.match(/^TG\((\d)\)$/);
@@ -424,7 +436,7 @@
     left: [
       ["KC_ESCAPE","KC_1","KC_2","KC_3","KC_4","KC_5"],
       ["KC_TAB","KC_Q","KC_W","KC_E","KC_R","KC_T"],
-      ["KC_EQUAL","LGUI_T(KC_A)","LALT_T(KC_S)","LCTL_T(KC_D)","LSFT_T(KC_F)","KC_G"],
+      ["KC_EQUAL","LGUI_T(KC_A)","LALT_T(KC_S)","LCTL_T(KC_D)","LSFT_T(KC_F)","RALT_T(KC_G)"],
       ["KC_GRAVE","KC_Z","KC_X","KC_C","KC_V","KC_B"]
     ],
     right: [
@@ -441,7 +453,7 @@
       ["KC_TRNS","KC_F1","KC_F2","KC_F3","KC_F4","KC_F5"],
       ["KC_TRNS","KC_TRNS","KC_TRNS","KC_TRNS","KC_TRNS","KC_TRNS"],
       ["KC_TRNS","KC_LEFT","KC_DOWN","KC_UP","KC_RIGHT","KC_LEFT"],
-      ["KC_TRNS","KC_TRNS","KC_TRNS","KC_TRNS","KC_TRNS","KC_TRNS"]
+      ["KC_TRNS","KC_TRNS","KC_TRNS","C_S(KC_C)","C_S(KC_V)","KC_TRNS"]
     ],
     right: [
       ["KC_F6","KC_F7","KC_F8","KC_F9","KC_F10","KC_F12"],
