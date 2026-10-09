@@ -31,6 +31,7 @@ alias gsd='claude --dangerously-skip-permissions'
 alias peterpecker='sudo reboot'
 alias donthurtme='sudo shutdown now'
 alias bdev-begin='systemd-run --user --scope --unit=begin-dev -p MemoryHigh=14G -p MemoryMax=18G -p MemorySwapMax=2G pnpm dev'
+alias wol-north="ssh admin@192.168.10.1 '/tool wol mac=E8:6A:64:F6:52:62 interface=vlan30'"
 
 # docker exec with auto shell detection
 dexec() {
