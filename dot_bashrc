@@ -12,7 +12,7 @@ HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
 
 # Path and env (mirrors .zshrc/.zprofile)
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
 export XCURSOR_SIZE=16
 export SUDO_ASKPASS=/usr/lib/ssh/ssh-askpass
 export EDITOR=nvim
@@ -31,6 +31,7 @@ alias gsd='claude --dangerously-skip-permissions'
 alias peterpecker='sudo reboot'
 alias donthurtme='sudo shutdown now'
 alias bdev-begin='systemd-run --user --scope --unit=begin-dev -p MemoryHigh=14G -p MemoryMax=18G -p MemorySwapMax=2G pnpm dev'
+alias herdr='systemd-run --user --scope --quiet -p MemoryHigh=24G -p MemoryMax=26G -p MemorySwapMax=2G -p AllowedCPUs=1-15 /usr/bin/herdr'
 
 # docker exec with auto shell detection
 dexec() {
@@ -45,12 +46,11 @@ dexec() {
   fi
 }
 
-# goto: goto.zsh's function is bash-compatible; its completion block is not
-[ -f ~/.config/goto/goto.zsh ] && source <(sed -n '/^goto()/,/^}/p' ~/.config/goto/goto.zsh)
+# goto - directory navigation (no-arg goto = fzf picker); j alias gets the same completion
+[ -f ~/.config/goto/goto.bash ] && source ~/.config/goto/goto.bash && complete -F _goto_completions j
 
 eval "$(mise activate bash)"
 command -v wt >/dev/null 2>&1 && eval "$(command wt config shell init bash)"
-# ponytail: atuin skipped, its bash hook needs bash-preexec or ble.sh (not installed)
 
 
 # Git aliases, exported from the zsh OMZ git plugin
@@ -84,6 +84,9 @@ alias gau='git add --update'
 alias gav='git add --verbose'
 alias gb='git branch'
 alias gbD='git branch --delete --force'
+alias gbg='LANG=C git branch -vv | grep ": gone\]"'
+alias gbgd='LANG=C git branch --no-color -vv | grep ": gone\]" | cut -c 3- | awk '\''{print $1}'\'' | xargs git branch -d'
+alias gbgD='LANG=C git branch --no-color -vv | grep ": gone\]" | cut -c 3- | awk '\''{print $1}'\'' | xargs git branch -D'
 alias gba='git branch --all'
 alias gbd='git branch --delete'
 alias gbl='git blame -w'
@@ -223,6 +226,7 @@ alias grs='git restore'
 alias grset='git remote set-url'
 alias grss='git restore --source'
 alias grst='git restore --staged'
+alias grt='cd "$(git rev-parse --show-toplevel || echo .)"'
 alias gru='git reset --'
 alias grup='git remote update'
 alias grv='git remote --verbose'
@@ -241,6 +245,7 @@ alias gstd='git stash drop'
 alias gstl='git stash list'
 alias gstp='git stash pop'
 alias gsts='git stash show --patch'
+alias gstu='gsta --include-untracked'
 alias gsu='git submodule update'
 alias gsw='git switch'
 alias gswc='git switch --create'
@@ -280,3 +285,9 @@ alias dcup='docker-compose up'
 alias dcupb='docker-compose up --build'
 alias dcupd='docker-compose up -d'
 alias dcupdb='docker-compose up -d --build'
+
+# Plain prompt on purpose (no starship) so a bash pane is easy to tell from zsh.
+PS1='[\u@\h \W]\$ '
+
+# Last: atuin bundles bash-preexec, which hooks PROMPT_COMMAND/DEBUG after the others are set
+command -v atuin >/dev/null 2>&1 && eval "$(atuin init bash)"
