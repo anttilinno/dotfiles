@@ -6,9 +6,17 @@ image = [
 pdf = [
 	{ run = 'zathura "$@"', orphan = true, desc = "zathura", for = "linux" },
 ]
+office = [
+	{ run = 'libreoffice "$@"', orphan = true, desc = "LibreOffice", for = "linux" },
+]
 
 [open]
 prepend_rules = [
 	{ mime = "image/*", use = "image" },
 	{ mime = "application/pdf", use = "pdf" },
+	{ mime = "application/vnd.oasis.opendocument.*", use = "office" },
+	{ mime = "application/vnd.openxmlformats-officedocument.*", use = "office" },
+	{ mime = "application/vnd.ms-*", use = "office" },
+	{ mime = "application/msword", use = "office" },
+	{ mime = "application/rtf", use = "office" },
 ]
