@@ -289,8 +289,9 @@ alias dcupb='docker-compose up --build'
 alias dcupd='docker-compose up -d'
 alias dcupdb='docker-compose up -d --build'
 
-# Plain prompt on purpose (no starship) so a bash pane is easy to tell from zsh.
-PS1='[\u@\h \W]\$ '
+# Starship with its own bracketed-segments config, so a bash pane still looks different from zsh.
+export STARSHIP_CONFIG=~/.config/starship-bash.toml
+eval "$(starship init bash)"
 
 # Last: atuin bundles bash-preexec, which hooks PROMPT_COMMAND/DEBUG after the others are set
 command -v atuin >/dev/null 2>&1 && eval "$(atuin init bash)"
