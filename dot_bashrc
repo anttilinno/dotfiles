@@ -16,6 +16,8 @@ export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
 export XCURSOR_SIZE=16
 export SUDO_ASKPASS=/usr/lib/ssh/ssh-askpass
 export EDITOR=nvim
+# herdr panes run bash but inherit SHELL=/bin/zsh; Claude Code picks its Bash-tool shell from $SHELL
+[ -n "$HERDR_ENV" ] && export SHELL=/bin/bash
 
 # Secrets (managed via shared-datafiles)
 [ -f ~/.secrets ] && source ~/.secrets
