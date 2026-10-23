@@ -6,7 +6,9 @@ Wants=network-online.target
 [Service]
 Type=oneshot
 WorkingDirectory=%h/Repos/Misc/shared-datafiles
+# Sync first: a bare push is rejected forever once another machine pushes.
+# sync.sh aborts the rebase on conflict, so this never leaves the repo broken.
+# No Restart=: the hourly timer is the retry (on-failure looped every 10s).
+ExecStart=%h/Repos/Misc/shared-datafiles/.automation/sync.sh
 ExecStart=/usr/bin/git push
-TimeoutStartSec=30
-Restart=on-failure
-RestartSec=10s
+TimeoutStartSec=60

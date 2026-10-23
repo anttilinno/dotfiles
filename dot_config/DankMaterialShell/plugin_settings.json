@@ -1,10 +1,11 @@
 {
-    "todoIndicator": {
-        "enabled": true
-    },
-    "pomodoro": {
-        "enabled": true,
-        "workMinutes": 55,
-        "startHour": 10
-    }
+  "todoIndicator": {
+    "enabled": true
+  },
+  "pomodoro": {
+    "enabled": true,
+    "workMinutes": 55,
+    "microMinutes": 25,
+    "startHour": 10
+  }
 }
