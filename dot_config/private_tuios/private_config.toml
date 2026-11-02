@@ -131,11 +131,3 @@ refresh = "event:agent-state"
 
 [keybindings.workspaces]
 new_workspace = ["alt+0"]
-
-# Open a terminal on an empty workspace when switching to it
-[workspaces]
-new_window_when_empty = true
-
-# Open a terminal when attaching to a session that has no panes
-[hooks]
-after-attach = 'if [ "$(tuios list-windows -s "$TUIOS_SESSION_ID" --json | jq .total)" = 0 ]; then tuios new-window -s "$TUIOS_SESSION_ID"; fi'
