@@ -128,3 +128,6 @@ sections = "sessions:25,terminals,custom:25,agents:34"
 title   = "Waiting on me"
 command = '''tuios list-agents --select 'state:needs_input,done,idle' --json | jq -r '.agents[] | (if .state=="needs_input" then "! " elif .state=="done" then "✓ " else "· " end) + .session + " · " + .name' '''
 refresh = "event:agent-state"
+
+[keybindings.workspaces]
+new_workspace = ["alt+0"]
