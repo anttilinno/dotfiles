@@ -172,5 +172,6 @@
       "followInterfaceStyle": true
     }
   ],
-  "configVersion": 28
+  "configVersion": 28,
+  "firstDayOfWeek": 1
 }
