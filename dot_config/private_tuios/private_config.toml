@@ -120,6 +120,11 @@
 tiled = true
 daemon = true
 
+# No minimize/maximize/close buttons: close sits next to minimize and a
+# misclick killed a pane. Use keybindings (m, M, ctrl+b m) instead.
+[appearance]
+hide_window_buttons = true
+
 [appearance.sidebar]
 sections = "sessions:25,terminals,custom:25,agents:34"
 
@@ -131,3 +136,6 @@ refresh = "event:agent-state"
 
 [keybindings.workspaces]
 new_workspace = ["alt+0"]
+
+[keybindings.window_management]
+close_window = []
