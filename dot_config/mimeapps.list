@@ -14,6 +14,7 @@ x-scheme-handler/slack=slack.desktop
 x-scheme-handler/tolaria=tolaria-handler.desktop
 application/pdf=org.pwmt.zathura.desktop
 x-scheme-handler/claude=com.anthropic.Claude.desktop
+x-scheme-handler/t3code=com.t3tools.T3Code.desktop
 
 [Added Associations]
 x-scheme-handler/http=zen.desktop;
