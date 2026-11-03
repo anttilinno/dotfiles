@@ -6,6 +6,7 @@
     "enabled": true,
     "workMinutes": 55,
     "microMinutes": 25,
-    "startHour": 10
+    "startHour": 10,
+    "screen": "DP-3"
   }
 }

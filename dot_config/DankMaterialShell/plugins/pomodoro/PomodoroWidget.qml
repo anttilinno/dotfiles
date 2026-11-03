@@ -77,6 +77,20 @@ PluginComponent {
             Quickshell.execDetached(["paplay", Qt.resolvedUrl("sounds/" + sound + ".wav").toString().replace("file://", "")])
     }
 
+    // Mirror to the XIAO RP2040 OLED (~/Repos/Misc/esp32/main.py), one line a second:
+    // "<phase> <secs left> <phase secs> <active 0|1> <secs to next event, 0 = none>". Outside a pomodoro (work, eye break) it counts to the next pomodoro.
+    // stty first: MicroPython reboots into the bootloader if the port is ever opened at 1200 baud.
+    // Board unplugged: the shell fails quietly. Board wedged: writes block in the kernel, flock -n skips ticks instead of piling up.
+    readonly property string boardPort: "/dev/serial/by-id/usb-MicroPython_Board_in_FS_mode_4150324e30363318-if00"
+    function sendBoard() {
+        if (!ownsOverlay)
+            return
+        const left = phase !== "break" && v.auto && nextBreak > 0 ? nextBreak - now : v.remaining
+        const total = P.duration(phase, cfg)
+        const line = [phase, Math.ceil(left / 1000), Math.round(total / 1000), active ? 1 : 0, Math.ceil(P.untilEvent(st, now, cfg) / 1000)].join(" ")
+        Quickshell.execDetached(["flock", "-n", "/run/user/1000/pomodoro-board.lock", "sh", "-c", 'stty -F "$2" 115200 raw -echo 2>/dev/null && printf "%s\\n" "$1" > "$2"', "sh", line, boardPort])
+    }
+
     // Always ticking: the schedule has to notice when working hours begin.
     Timer {
         interval: 1000
@@ -85,6 +99,7 @@ PluginComponent {
         onTriggered: {
             const prev = root.v
             root.now = Date.now()
+            root.sendBoard()
             if (!prev.auto || !root.v.auto || !root.running || prev.phase === root.phase)
                 return
             if (root.phase === "micro")

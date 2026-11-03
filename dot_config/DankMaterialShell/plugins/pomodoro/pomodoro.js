@@ -127,6 +127,24 @@ function click(s, now, cfg) {
     return { phase: s.phase, endAt: now + remaining(s, now, cfg), pausedLeft: 0, offDay: s.offDay }
 }
 
+// Ms until the next eye break, pomodoro, back to work or manual timer end, or 0 when none is coming.
+// Not during an eye break: it only lasts 30 s, the countdown would replace it entirely.
+function untilEvent(s, now, cfg) {
+    var v = view(s, now, cfg)
+    if (!v.running || v.phase === "micro")
+        return 0
+    if (!v.auto)
+        return v.remaining
+    var sl = slot(now, cfg)
+    if (sl.phase === "work" && cfg.micro) {
+        var k = Math.floor((now - sl.start) / cfg.micro) + 1
+        var micro = sl.start + k * cfg.micro
+        if (cfg.work - k * cfg.micro >= cfg.micro && micro < sl.endAt)
+            return micro - now
+    }
+    return slot(sl.endAt, cfg) ? v.remaining : 0 // the day's last slot just ends
+}
+
 // "in 12 min", "in 3 h 5 min"
 function until(ms) {
     var m = Math.ceil(ms / 60000)

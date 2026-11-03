@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs"
 import assert from "node:assert/strict"
 
 const src = readFileSync(new URL("./pomodoro.js", import.meta.url), "utf8").replace(".pragma library", "")
-const P = new Function(src + "; return { reset, click, remaining, isDone, format, slot, view, nextBreak, until }")()
+const P = new Function(src + "; return { reset, click, remaining, isDone, format, slot, view, nextBreak, until, untilEvent }")()
 
 const WORK = 25 * 60 * 1000, BREAK = 5 * 60 * 1000
 const cfg = { work: WORK, brk: BREAK, startHour: 0, endHour: 0 } // no schedule: manual timer
@@ -86,4 +86,18 @@ assert.equal(P.view(P.reset(), at(9, 50, 10), eyes).phase, "work") // break 5 mi
 assert.equal(P.view(P.reset(), at(10, 25, 10), eyes).phase, "micro") // next hour
 assert.ok(!P.view(P.click(P.reset(), at(9, 0), eyes), at(9, 25, 10), eyes).overlay) // off today: none
 assert.equal(P.view(P.reset(), at(9, 25, 10), { ...eyes, micro: 0 }).phase, "work") // 0 = off
+
+// Next event for the board countdown.
+assert.equal(P.untilEvent(P.reset(), at(9, 24, 40), eyes), 20000) // eye break
+assert.equal(P.untilEvent(P.reset(), at(9, 25, 10), eyes), 0) // in an eye break: none
+assert.equal(P.untilEvent(P.reset(), at(9, 54, 40), eyes), 20000) // pomodoro, skipped eye break at 9:50 ignored
+assert.equal(P.untilEvent(P.reset(), at(9, 59, 40), eyes), 20000) // back to work
+assert.equal(P.untilEvent(P.reset(), at(9, 24, 40), { ...eyes, micro: 0 }), 30 * 60000 + 20000) // eye breaks off
+assert.equal(P.untilEvent(P.click(P.reset(), at(9, 0), eyes), at(9, 24, 40), eyes), 0) // off today
+assert.equal(P.untilEvent(P.reset(), at(8, 0), eyes), 0) // before the day, timer not running
+assert.equal(P.untilEvent(P.reset(), at(16, 59, 40), day), 0) // last break of the day: nothing follows
+assert.equal(P.untilEvent(P.reset(), at(9, 58), short), 0) // cut-short work slot: nothing follows
+s = P.click(P.reset(), at(18, 0), day) // manual timer
+assert.equal(P.untilEvent(s, at(18, 1), day), WORK - 60000)
+assert.equal(P.untilEvent(P.click(s, at(18, 1), day), at(18, 2), day), 0) // paused
 console.log("ok")
