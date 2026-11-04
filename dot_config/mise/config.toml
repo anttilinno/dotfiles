@@ -1,10 +1,10 @@
 [tools]
-node = "lts"
+node = "26"
 uv = "latest"
 "github:anttilinno/todo-calendar" = "latest"
 "github:anttilinno/goto" = { version = "2.2.2", bin = "goto-bin" }
 "github:letmutex/gitas" = "0.0.6"
-pnpm = "12"
+pnpm = "latest"
 gitleaks = "latest"
 trivy = "latest"
 k6 = "latest"

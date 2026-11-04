@@ -15,6 +15,7 @@ x-scheme-handler/tolaria=tolaria-handler.desktop
 application/pdf=org.pwmt.zathura.desktop
 x-scheme-handler/claude=com.anthropic.Claude.desktop
 x-scheme-handler/t3code=com.t3tools.T3Code.desktop
+x-scheme-handler/discord-1296840202995896363=discord-1296840202995896363.desktop
 
 [Added Associations]
 x-scheme-handler/http=zen.desktop;

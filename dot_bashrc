@@ -36,22 +36,6 @@ alias bdev-begin='systemd-run --user --scope --unit=begin-dev -p MemoryHigh=14G 
 alias wol-north="ssh admin@192.168.10.1 '/tool wol mac=E8:6A:64:F6:52:62 interface=vlan30'"
 alias herdr='systemd-run --user --scope --quiet -p MemoryHigh=24G -p MemoryMax=26G -p MemorySwapMax=2G -p AllowedCPUs=1-15 /usr/bin/herdr'
 
-# tuios: plain `tuios` first makes the default sessions that are missing, empty
-_tuios_defaults() {
-  local s id
-  for s in classic v2 personal; do
-    command tuios ls --json 2>/dev/null | jq -e --arg s "$s" 'any(.[]; .name == $s)' >/dev/null && continue
-    command tuios new "$s" --detach >/dev/null || continue
-    # --detach always opens a shell; close it so the session starts empty
-    id=$(command tuios list-windows -s "$s" --json | jq -r '.windows[0].window_id')
-    command tuios close-window -s "$s" "$id" >/dev/null
-  done
-}
-tuios() {
-  [ $# -eq 0 ] && _tuios_defaults
-  command tuios "$@"
-}
-
 # docker exec with auto shell detection
 dexec() {
   if [ -z "$1" ]; then
@@ -311,3 +295,9 @@ eval "$(starship init bash)"
 
 # Last: atuin bundles bash-preexec, which hooks PROMPT_COMMAND/DEBUG after the others are set
 command -v atuin >/dev/null 2>&1 && eval "$(atuin init bash)"
+
+PATH="/home/antti/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/antti/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/antti/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/antti/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/antti/perl5"; export PERL_MM_OPT;

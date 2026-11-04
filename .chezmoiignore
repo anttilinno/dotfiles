@@ -7,4 +7,5 @@ CLAUDE.md
 .config/niri/dms/layout.kdl
 .config/niri/dms/windowrules.kdl
 .config/niri/dms/wpblur.kdl
-.config/DankMaterialShell/.changelog-*
+.config/dms/.changelog-*
+.config/dms/*.bak-*
