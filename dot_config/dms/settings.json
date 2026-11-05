@@ -22,6 +22,9 @@
     }
   },
   "osdPowerProfileEnabled": true,
+  "acPostLockMonitorTimeout": 90,
+  "acMonitorTimeout": 600,
+  "acLockTimeout": 900,
   "barConfigs": [
     {
       "id": "default",
