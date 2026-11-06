@@ -137,8 +137,11 @@ refresh = "event:agent-state"
 [keybindings.workspaces]
 new_workspace = ["alt+0"]
 
+# w/x closed panes on a misclick. An empty list warns ("Essential action
+# close_window has no keybinding"), so park it on a chord nobody hits by
+# accident. ctrl+b x still closes too.
 [keybindings.window_management]
-close_window = []
+close_window = ["ctrl+alt+w"]
 
 # Keep the v2, classic and personal sessions around: create any that is
 # missing on attach. tuios has no daemon-start hook; after-attach runs in the
