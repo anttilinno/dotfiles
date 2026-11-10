@@ -1,0 +1,18 @@
+[Unit]
+Description=Begin worktime: clock in at login (start = boot time), clock out at logout/shutdown
+# User units can't order after network-online.target; network failures retry instead.
+StartLimitIntervalSec=600
+StartLimitBurst=10
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=%h/Repos/Misc/worktime/worktime in
+ExecStop=%h/Repos/Misc/worktime/worktime out
+Restart=on-failure
+RestartSec=30
+# 1 = unknown computer / not clocked in, 2 = usage: retrying won't help.
+RestartPreventExitStatus=1 2
+
+[Install]
+WantedBy=default.target
