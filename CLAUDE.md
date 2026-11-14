@@ -13,7 +13,7 @@ Managed with [chezmoi](https://www.chezmoi.io/). Source dir: `~/.local/share/che
 `.chezmoi.toml.tmpl` sets `role = "server"` on host `north` (headless Debian T480, bash login shell) and `desktop` elsewhere; `kodi`/`retro-laptop` come from the `mise run setup` prompt.
 On `server`, `.chezmoiignore` drops zsh, the desktop/WM/audio files, systemd units and the desktop `run_` scripts, plus the goto `aliases.toml` symlink (it points into `shared-datafiles`, which must never be cloned on north — it holds secrets).
 The mise config installs `chezmoi` and `starship` there (Debian has none / too old) and skips rust/trivy/k6 (30G root).
-Bootstrap: `mise x chezmoi@latest -- chezmoi init --apply https://github.com/anttilinno/dotfiles.git`, then `mise install` (brings starship too: Debian's 1.22 rejects the `cpp` module in the bash config).
+Bootstrap: `git clone https://github.com/anttilinno/dotfiles.git ~/Repos/Misc/dotfiles && mise x chezmoi@latest -- chezmoi init --apply --source ~/Repos/Misc/dotfiles` (plain `init <url>` would clone to `~/.local/share/chezmoi`, not the `sourceDir` this config names), then `mise install` (brings starship too: Debian's 1.22 rejects the `cpp` module in the bash config).
 
 ## What's managed
 
