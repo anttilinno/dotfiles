@@ -24,6 +24,8 @@ CLAUDE.md
 .config/mimeapps.list
 .config/newsboat
 .config/niri
+.config/starship.toml
+.config/starship-bash.toml
 .config/systemd
 .config/themes
 .config/wpaperd
