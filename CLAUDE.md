@@ -11,9 +11,11 @@ Managed with [chezmoi](https://www.chezmoi.io/). Source dir: `~/.local/share/che
 ## Roles
 
 `.chezmoi.toml.tmpl` sets `role = "server"` on host `north` (headless Debian T480, bash login shell) and `desktop` elsewhere; `kodi`/`retro-laptop` come from the `mise run setup` prompt.
-On `server`, `.chezmoiignore` drops zsh, starship (headless boxes keep bash's plain prompt), the desktop/WM/audio files, systemd units and the desktop `run_` scripts, plus the goto `aliases.toml` symlink (it points into `shared-datafiles`, which must never be cloned on north — it holds secrets).
+On `server`, `.chezmoiignore` drops zsh, starship (headless boxes keep bash's plain prompt), the desktop/WM/audio files, the desktop systemd units and `run_` scripts, plus the goto `aliases.toml` symlink (it points into `shared-datafiles`, which must never be cloned on north — it holds secrets).
 The mise config installs `chezmoi` there (Debian has no package) and skips rust/trivy/k6 (30G root).
 Bootstrap: `git clone https://github.com/anttilinno/dotfiles.git ~/Repos/Misc/dotfiles && mise x chezmoi@latest -- chezmoi init --apply --source ~/Repos/Misc/dotfiles` (plain `init <url>` would clone to `~/.local/share/chezmoi`, not the `sourceDir` this config names), then `mise install`.
+Server only: `systemd/user/tuios.service` runs the tuios daemon (desktop ignores it), and the tuios after-attach hook keeps just the `classic` session there.
+Enable it once by hand — `sudo loginctl enable-linger antti && systemctl --user daemon-reload && systemctl --user enable --now tuios` — and restart it with `systemctl --user restart tuios`. No `run_` script does this, because restarting the daemon kills every pane.
 
 ## What's managed
 

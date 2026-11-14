@@ -26,7 +26,12 @@ CLAUDE.md
 .config/niri
 .config/starship.toml
 .config/starship-bash.toml
-.config/systemd
+.config/systemd/user/autocommit-shared-datafiles.service
+.config/systemd/user/huion-kd100d.service
+.config/systemd/user/push-shared-datafiles.service
+.config/systemd/user/push-shared-datafiles.timer
+.config/systemd/user/sync-shared-datafiles.service
+.config/systemd/user/worktime.service
 .config/themes
 .config/wpaperd
 .local/bin/claude-alert
@@ -35,4 +40,6 @@ docs
 delegate-cpuset.sh
 deploy-zen-policies.sh
 enable-systemd-user-services.sh
+{{- else }}
+.config/systemd/user/tuios.service
 {{- end }}

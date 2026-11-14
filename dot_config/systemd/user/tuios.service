@@ -1,0 +1,18 @@
+# north only (server role): the tuios daemon that holds the long-lived Claude
+# sessions. `loginctl enable-linger antti` keeps it up with nobody logged in.
+# Restart it with `systemctl --user restart tuios`, not `tuios restart-server`:
+# that starts the new daemon from a helper process outside this unit.
+[Unit]
+Description=tuios daemon
+
+[Service]
+ExecStart=%h/.local/bin/tuios daemon
+WorkingDirectory=%h
+# Started by systemd, not a login shell, so ~/.bashrc never runs here
+Environment=PATH=%h/.local/share/mise/shims:%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+Environment=SHELL=/bin/bash
+Environment=ENABLE_CLAUDEAI_MCP_SERVERS=false
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

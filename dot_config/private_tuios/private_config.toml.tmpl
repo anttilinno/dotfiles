@@ -143,8 +143,8 @@ new_workspace = ["alt+0"]
 [keybindings.window_management]
 close_window = ["ctrl+alt+w"]
 
-# Keep the v2, classic and personal sessions around: create any that is
-# missing on attach. tuios has no daemon-start hook; after-attach runs in the
+# Keep the v2, classic and personal sessions around (north: classic only):
+# create any that is missing on attach. tuios has no daemon-start hook; after-attach runs in the
 # client on every attach, and this is a no-op once all three exist.
 [hooks]
-after-attach = ['have=$(tuios ls --json | jq -r ".[].name"); for s in v2 classic personal; do printf "%s\n" "$have" | grep -qx "$s" || tuios new "$s" --detach --cwd "$HOME" >/dev/null; done']
+after-attach = ['have=$(tuios ls --json | jq -r ".[].name"); for s in {{ if eq .role "server" }}classic{{ else }}v2 classic personal{{ end }}; do printf "%s\n" "$have" | grep -qx "$s" || tuios new "$s" --detach --cwd "$HOME" >/dev/null; done']
