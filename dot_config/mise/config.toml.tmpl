@@ -7,8 +7,10 @@ uv = "latest"
 pnpm = "latest"
 gitleaks = "latest"
 {{- if eq .role "server" }}
-# server (north): no pacman chezmoi, and a 30G root, so no rust/trivy/k6
+# server (north): Debian has no chezmoi and a too-old starship (1.22 rejects
+# the cpp module); 30G root, so no rust/trivy/k6
 chezmoi = "latest"
+starship = "latest"
 {{- else }}
 trivy = "latest"
 k6 = "latest"
