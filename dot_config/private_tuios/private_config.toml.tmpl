@@ -148,3 +148,10 @@ close_window = ["ctrl+alt+w"]
 # client on every attach, and this is a no-op once all three exist.
 [hooks]
 after-attach = ['have=$(tuios ls --json | jq -r ".[].name"); for s in {{ if eq .role "server" }}classic{{ else }}v2 classic personal{{ end }}; do printf "%s\n" "$have" | grep -qx "$s" || tuios new "$s" --detach --cwd "$HOME" >/dev/null; done']
+{{- if ne .role "server" }}
+
+# north: headless Claude session hub (tuios daemon as a systemd user unit).
+# Its sessions show in the rail; `tuios attach --host north classic`.
+[hosts.north]
+addr = "north"
+{{- end }}
