@@ -7,9 +7,10 @@ uv = "latest"
 pnpm = "latest"
 gitleaks = "latest"
 {{- if eq .role "server" }}
-# server (north): Debian has no chezmoi package; headless, plain prompt, no
-# starship; 30G root, so no rust/trivy/k6
+# server (north): Debian has no chezmoi package; bash-only starship prompt;
+# 30G root, so no rust/trivy/k6
 chezmoi = "latest"
+starship = "latest"
 {{- else }}
 trivy = "latest"
 k6 = "latest"

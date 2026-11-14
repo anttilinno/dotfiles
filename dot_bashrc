@@ -295,7 +295,7 @@ alias dcupd='docker compose up -d'
 alias dcupdb='docker compose up -d --build'
 
 # Starship with its own bracketed-segments config, so a bash pane still looks different from zsh.
-# Headless servers have no starship and keep bash's plain prompt.
+# North (server role) uses the same bash config.
 if command -v starship >/dev/null 2>&1; then
   export STARSHIP_CONFIG=~/.config/starship-bash.toml
   eval "$(starship init bash)"

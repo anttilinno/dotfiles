@@ -25,7 +25,6 @@ CLAUDE.md
 .config/newsboat
 .config/niri
 .config/starship.toml
-.config/starship-bash.toml
 .config/systemd/user/autocommit-shared-datafiles.service
 .config/systemd/user/huion-kd100d.service
 .config/systemd/user/push-shared-datafiles.service
