@@ -9,3 +9,28 @@ CLAUDE.md
 .config/niri/dms/wpblur.kdl
 .config/dms/.changelog-*
 .config/dms/*.bak-*
+
+{{- if eq .role "server" }}
+# server (north, headless Debian, bash login shell): shell + CLI tools only
+.zshrc
+.zprofile
+.zen
+.config/dms
+.config/foot
+.config/goto/aliases.toml
+.config/herdr
+.config/huion-kd100d
+.config/meli
+.config/mimeapps.list
+.config/newsboat
+.config/niri
+.config/systemd
+.config/themes
+.config/wpaperd
+.local/bin/claude-alert
+.local/share/sounds
+docs
+delegate-cpuset.sh
+deploy-zen-policies.sh
+enable-systemd-user-services.sh
+{{- end }}

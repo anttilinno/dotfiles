@@ -1,4 +1,4 @@
 sourceDir = "{{ .chezmoi.homeDir }}/Repos/Misc/dotfiles"
 
 [data]
-  role = "desktop"
+  role = "{{ if eq .chezmoi.hostname "north" }}server{{ else }}desktop{{ end }}"

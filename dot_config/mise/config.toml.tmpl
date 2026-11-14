@@ -6,6 +6,11 @@ uv = "latest"
 "github:letmutex/gitas" = "0.0.6"
 pnpm = "latest"
 gitleaks = "latest"
+{{- if eq .role "server" }}
+# server (north): no pacman chezmoi, and a 30G root, so no rust/trivy/k6
+chezmoi = "latest"
+{{- else }}
 trivy = "latest"
 k6 = "latest"
 rust = "1.95.0"
+{{- end }}
