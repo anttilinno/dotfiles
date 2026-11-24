@@ -1,7 +1,8 @@
 #!/bin/bash
 # Deploy Zen Browser policies to system directory (requires sudo)
 # Hash: {{ include "dot_zen/distribution/policies.json" | sha256sum }}
-# Hash: {{ include "dot_zen/defaults/pref/dotfiles-prefs.js" | sha256sum }}
+# Hash: {{ include "dot_zen/defaults/pref/autoconfig.js" | sha256sum }}
+# Hash: {{ include "dot_zen/dotfiles.cfg" | sha256sum }}
 # Zen installed: {{ if stat "/opt/zen-browser-bin" }}yes{{ else }}no{{ end }}
 # (that line changes once Zen is installed, so this re-runs then; without it a
 # run on a machine without Zen counted as done and never deployed)
@@ -12,5 +13,8 @@ if [ ! -d /opt/zen-browser-bin ]; then
   exit 0
 fi
 sudo install -D -m 644 "$HOME/.zen/distribution/policies.json" /opt/zen-browser-bin/distribution/policies.json
-sudo install -D -m 644 "$HOME/.zen/defaults/pref/dotfiles-prefs.js" /opt/zen-browser-bin/defaults/pref/dotfiles-prefs.js
+sudo install -D -m 644 "$HOME/.zen/defaults/pref/autoconfig.js" /opt/zen-browser-bin/defaults/pref/autoconfig.js
+sudo install -D -m 644 "$HOME/.zen/dotfiles.cfg" /opt/zen-browser-bin/dotfiles.cfg
+# Replaced by autoconfig: a plain defaults file lost to Zen's own zen.* defaults
+sudo rm -f /opt/zen-browser-bin/defaults/pref/dotfiles-prefs.js
 echo "Zen Browser policies and default prefs deployed to /opt/zen-browser-bin/"
