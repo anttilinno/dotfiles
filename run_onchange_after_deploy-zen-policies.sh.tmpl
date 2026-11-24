@@ -1,6 +1,14 @@
 #!/bin/bash
 # Deploy Zen Browser policies to system directory (requires sudo)
 # Hash: {{ include "dot_zen/distribution/policies.json" | sha256sum }}
+# Zen installed: {{ if stat "/opt/zen-browser-bin" }}yes{{ else }}no{{ end }}
+# (that line changes once Zen is installed, so this re-runs then; without it a
+# run on a machine without Zen counted as done and never deployed)
+set -euo pipefail
 
-sudo cp "$HOME/.zen/distribution/policies.json" /opt/zen-browser-bin/distribution/policies.json
+if [ ! -d /opt/zen-browser-bin ]; then
+  echo "Zen Browser not installed, skipping policies"
+  exit 0
+fi
+sudo install -D -m 644 "$HOME/.zen/distribution/policies.json" /opt/zen-browser-bin/distribution/policies.json
 echo "Zen Browser policies deployed to /opt/zen-browser-bin/distribution/"
