@@ -1,0 +1,7 @@
+{{- if ne .role "server" -}}
+#!/bin/bash
+# foot.ini includes colors.ini, which only switch-theme.sh writes and which is
+# untracked, so a fresh machine has none and foot refuses to start. Seed it
+# once with the theme matching foot.ini's initial-color-theme=light.
+[ -f "$HOME/.config/foot/colors.ini" ] || "$HOME/.config/foot/switch-theme.sh" gruvbox-light
+{{ end -}}
