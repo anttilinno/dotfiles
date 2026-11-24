@@ -10,4 +10,11 @@ systemctl --user daemon-reload
 systemctl --user enable --now sync-shared-datafiles.service
 systemctl --user enable --now autocommit-shared-datafiles.service
 systemctl --user enable --now push-shared-datafiles.timer
-systemctl --user enable --now worktime.service
+# worktime only knows the machines in its machine-id case list and exits 1
+# anywhere else, which used to fail this script (and chezmoi apply) on every
+# other host. Ask the script itself so the list lives in one place.
+if grep -qF "$(cat /etc/machine-id)" ~/.local/bin/worktime 2>/dev/null; then
+  systemctl --user enable --now worktime.service
+else
+  systemctl --user disable --now worktime.service 2>/dev/null || true
+fi
