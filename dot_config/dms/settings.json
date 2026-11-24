@@ -3,7 +3,8 @@
   "currentThemeCategory": "registry",
   "customThemeFile": "/home/antti/.config/DankMaterialShell/themes/gruvboxMulti/theme.json",
   "appIdSubstitutions": [],
-  "useAutoLocation": true,
+  "useAutoLocation": false,
+  "firstDayOfWeek": 1,
   "networkPreference": "wifi",
   "cursorSettings": {
     "theme": "Adwaita",
