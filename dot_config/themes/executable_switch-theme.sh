@@ -104,6 +104,15 @@ EOF
         sed -i "s/^color_theme = .*/color_theme = \"gruvbox-$theme\"/" "$HOME/.config/btop/btop.conf"
     fi
 
+    # Update tuios: sed the file (keeps its comments), then push the theme to
+    # running sessions with --no-save so set-config does not rewrite the file
+    if [ -f "$HOME/.config/tuios/config.toml" ]; then
+        sed -i "s/^theme = .*/theme = \"gruvbox_$theme\"/" "$HOME/.config/tuios/config.toml"
+        for s in $(tuios ls --json 2>/dev/null | jq -r '.[].name' 2>/dev/null); do
+            tuios set-config -s "$s" --no-save appearance.theme "gruvbox_$theme" >/dev/null 2>&1
+        done
+    fi
+
     # Update lazygit
     mkdir -p "$HOME/.config/lazygit"
     cat > "$HOME/.config/lazygit/config.yml" << EOF
