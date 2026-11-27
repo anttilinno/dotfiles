@@ -18,7 +18,6 @@ CLAUDE.md
 .config/dms
 .config/foot
 .config/goto/aliases.toml
-.config/herdr
 .config/huion-kd100d
 .config/meli
 .config/mimeapps.list
@@ -36,7 +35,6 @@ CLAUDE.md
 .local/bin/claude-alert
 .local/share/sounds
 docs
-delegate-cpuset.sh
 deploy-zen-policies.sh
 enable-systemd-user-services.sh
 {{- else }}

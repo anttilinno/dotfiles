@@ -19,10 +19,10 @@ Enable it once by hand — `sudo loginctl enable-linger antti && systemctl --use
 
 ## What's managed
 
-- **Shell**: zshrc, zprofile, bashrc (herdr panes; mirrors zshrc, but starship uses the no-empty-icons preset via `starship-bash.toml` so the prompt tells the shells apart), starship prompt
+- **Shell**: zshrc, zprofile, bashrc (tuios panes; mirrors zshrc, but starship uses the no-empty-icons preset via `starship-bash.toml` so the prompt tells the shells apart), starship prompt
 - **WM/Desktop**: niri, wpaperd, themes (gruvbox light/dark switcher)
 - **Bar/Shell**: DankMaterialShell (`dms/` — DMS 2.0 moved its config there (the old `~/.config/DankMaterialShell` symlink is not managed, so paths in `settings.json` must use `~/.config/dms`); settings, plugins, themes, zen.css; bar runs via `dms.service` for niri). State files `.changelog-*`/`.firstlaunch` not tracked. Custom `plugins/todoIndicator` shows green/red from `todo-calendar --status`. Custom `plugins/pomodoro` is a break timer on fixed clock slots during working hours (manual timer outside them) plus 30 s eye breaks inside work slots, with a countdown overlay on the second monitor; logic in `pomodoro.js`, checked by `node test.mjs`.
-- **Terminal**: foot; herdr (`config.toml` only — sockets, logs, `session.json` are state). Herdr panes use bash (`default_shell`); plain terminals stay zsh + starship
+- **Terminal**: foot; tuios (panes use bash via `preferred_shell`, so Claude Code inherits bash; plain terminals stay zsh + starship)
 - **Zen**: `dot_zen/distribution/policies.json` (force-installed extensions, pinned to the toolbar with `default_area: navbar`) and an autoconfig pair — `dot_zen/defaults/pref/autoconfig.js` naming `dot_zen/dotfiles.cfg`, whose `defaultPref()` calls set the toolbar layout, collapsed sidebar, … — all copied into `/opt/zen-browser-bin` by the sudo `deploy-zen-policies` run script. Defaults only, so the browser's own changes win per profile; refresh the file from a profile's `prefs.js`. A profile `user.js` with `marionette`/`focusmanager.testmode` prefs is left behind by browser automation, not config — don't copy it.
 - **Tools**: btop, gh, goto, todo-calendar, newsboat (`urls`, plus `excerpt.py` — a filter that prepends an article excerpt to link-only feeds like HN/Lobsters)
 - **Git**: gitconfig

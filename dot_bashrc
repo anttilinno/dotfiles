@@ -16,8 +16,8 @@ export PATH="$HOME/.local/share/mise/shims:$HOME/.local/bin:$PATH"
 export XCURSOR_SIZE=16
 export SUDO_ASKPASS=/usr/lib/ssh/ssh-askpass
 export EDITOR=nvim
-# herdr panes run bash but inherit SHELL=/bin/zsh; Claude Code picks its Bash-tool shell from $SHELL
-[ -n "$HERDR_ENV" ] && export SHELL=/bin/bash
+# tuios panes run bash but inherit SHELL=/bin/zsh; Claude Code picks its Bash-tool shell from $SHELL
+[ -n "$TUIOS_PANE_ID" ] && export SHELL=/bin/bash
 # north: no claude.ai connectors (Slack/Gmail/Drive)
 [ "$HOSTNAME" = north ] && export ENABLE_CLAUDEAI_MCP_SERVERS=false
 
@@ -39,7 +39,6 @@ alias peterpecker='sudo reboot'
 alias donthurtme='sudo shutdown now'
 alias bdev-begin='systemd-run --user --scope --unit=begin-dev -p MemoryHigh=14G -p MemoryMax=18G -p MemorySwapMax=2G pnpm dev'
 alias wol-north="ssh admin@192.168.10.1 '/tool wol mac=E8:6A:64:F6:52:62 interface=vlan30'"
-alias herdr='systemd-run --user --scope --quiet -p MemoryHigh=24G -p MemoryMax=26G -p MemorySwapMax=2G -p AllowedCPUs=1-15 /usr/bin/herdr'
 
 # docker exec with auto shell detection
 dexec() {
