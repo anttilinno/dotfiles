@@ -125,7 +125,7 @@ daemon = true
 [appearance]
 hide_window_buttons = true
 # gruvbox_light / gruvbox_dark, rewritten by themes/switch-theme.sh
-theme = "gruvbox_light"
+theme = "gruvbox_{{ template "theme" . }}"
 # bash, so Claude Code in a pane runs its Bash tool in bash too (see .bashrc)
 preferred_shell = "/bin/bash"
 

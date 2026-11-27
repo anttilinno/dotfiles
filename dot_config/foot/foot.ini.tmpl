@@ -1,7 +1,7 @@
 [main]
 font=JetBrainsMono NF SemiBold:style=SemiBold Italic:size=12, Noto Sans CJK JP:size=12
 include=~/.config/foot/colors.ini
-initial-color-theme=light
+initial-color-theme={{ template "theme" . }}
 
 [url]
 launch=xdg-open ${url}

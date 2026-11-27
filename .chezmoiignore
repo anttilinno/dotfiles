@@ -9,6 +9,8 @@ CLAUDE.md
 .config/niri/dms/wpblur.kdl
 .config/dms/.changelog-*
 .config/dms/*.bak-*
+# DMS regenerates it (matugen) on every theme change
+.config/dms/zen.css
 
 {{- if eq .role "server" }}
 # server (north, headless Debian, bash login shell): shell + CLI tools only

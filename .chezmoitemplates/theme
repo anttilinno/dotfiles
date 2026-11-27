@@ -1,0 +1,3 @@
+{{- /* light or dark: what themes/switch-theme.sh last applied (themes/current, untracked), else light */ -}}
+{{- $f := joinPath .chezmoi.homeDir ".config/themes/current" -}}
+{{- if stat $f -}}{{ include $f | trim }}{{- else -}}light{{- end -}}
