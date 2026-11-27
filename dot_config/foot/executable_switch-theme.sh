@@ -37,7 +37,8 @@ set_initial_theme() {
             { print }
         ' "$FOOT_INI" > "$tmp"
     fi
-    mv "$tmp" "$FOOT_INI"
+    # cat, not mv: mktemp makes 0600 files and mv would carry that over
+    cat "$tmp" > "$FOOT_INI" && rm -f "$tmp"
 }
 
 apply_theme() {
