@@ -35,6 +35,7 @@ CLAUDE.md
 .local/bin/claude-alert
 .local/share/sounds
 docs
+delegate-cpuset.sh
 deploy-zen-policies.sh
 enable-systemd-user-services.sh
 {{- else }}

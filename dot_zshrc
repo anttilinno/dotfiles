@@ -37,6 +37,17 @@ alias donthurtme='sudo shutdown now'
 alias bdev-begin='systemd-run --user --scope --unit=begin-dev -p MemoryHigh=14G -p MemoryMax=18G -p MemorySwapMax=2G pnpm dev'
 alias wol-north="ssh admin@192.168.10.1 '/tool wol mac=E8:6A:64:F6:52:62 interface=vlan30'"
 
+# tuios: start the daemon in a capped scope, so it and every pane it holds
+# (dev servers, builds) can't take the WM or the box down. The daemon stays in
+# the scope of the client that starts it. Core 0 stays free; AllowedCPUs needs
+# cpuset delegated to user@.service (run_onchange_after_delegate-cpuset.sh).
+_tuios_capped() {
+  command tuios ls >/dev/null 2>&1 && return
+  systemd-run --user --scope --quiet --unit=tuios-daemon \
+    -p MemoryHigh=75% -p MemoryMax=85% -p MemorySwapMax=2G \
+    -p AllowedCPUs=1-$(( $(nproc) - 1 )) tuios start-server >/dev/null
+}
+
 # tuios: plain `tuios` first makes the default sessions that are missing, empty
 _tuios_defaults() {
   local s id
@@ -49,6 +60,7 @@ _tuios_defaults() {
   done
 }
 tuios() {
+  _tuios_capped
   [ $# -eq 0 ] && _tuios_defaults
   command tuios "$@"
 }
